@@ -52,11 +52,11 @@ const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-          className="max-w-5xl text-[44px] xs:text-[50px] leading-[1.04] sm:text-[64px] md:text-[82px] lg:text-[96px] font-bold tracking-[-0.035em] text-[#EDEDED] [text-wrap:balance]"
+          className="max-w-5xl text-[46px] xs:text-[54px] leading-[1.04] sm:text-[68px] md:text-[84px] lg:text-[96px] font-bold tracking-[-0.035em] text-[#EDEDED]"
         >
           Designing Experiences
           <br />
-          <span className="text-gradient">Beyond Gravity</span>
+          <span className="text-gradient whitespace-nowrap">Beyond Gravity</span>
         </motion.h1>
 
         <motion.p
@@ -95,7 +95,7 @@ const Hero = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 1 }}
         aria-hidden="true"
-        className="hidden sm:flex absolute bottom-10 md:bottom-12 left-1/2 -translate-x-1/2 z-10 flex-col items-center gap-2 text-[11px] tracking-[0.2em] text-[#9CA3AF] uppercase pointer-events-none"
+        className="flex absolute bottom-8 md:bottom-12 left-1/2 -translate-x-1/2 z-10 flex-col items-center gap-2 text-[11px] tracking-[0.2em] text-[#9CA3AF] uppercase pointer-events-none"
       >
         <span>Scroll</span>
         <span className="w-px h-8 bg-gradient-to-b from-white/30 to-transparent scroll-hint" />
