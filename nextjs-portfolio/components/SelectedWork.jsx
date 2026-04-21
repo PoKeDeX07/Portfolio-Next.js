@@ -37,7 +37,7 @@ const ProjectCard = ({ project, index }) => {
       >
         <div className="grid md:grid-cols-5 gap-0">
           <div className="md:col-span-3 p-5 md:p-8">
-            <div className="relative h-[240px] md:h-[360px] rounded-2xl overflow-hidden bg-[#0B0B0F]">
+            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-[#0B0B0F]">
               <Image
                 src={project.image}
                 alt={project.title}
@@ -54,7 +54,7 @@ const ProjectCard = ({ project, index }) => {
             </div>
           </div>
 
-          <div className="md:col-span-2 p-6 md:p-10 flex flex-col justify-between min-h-[260px] md:min-h-[360px]">
+          <div className="md:col-span-2 p-6 md:p-10 flex flex-col justify-between gap-8">
             <div>
               <div className="flex flex-wrap gap-2">
                 {project.tags.map((tag) => (
