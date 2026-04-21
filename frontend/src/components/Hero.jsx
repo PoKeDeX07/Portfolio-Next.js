@@ -37,7 +37,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="flex items-center gap-2 mb-8 sm:mb-10"
+          className="flex justify-center mb-8 sm:mb-10"
         >
           <span className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.025] border border-white/[0.06] text-[12px] sm:text-[13px] text-[#9CA3AF]/80">
             <span className="relative flex h-1.5 w-1.5">
@@ -47,11 +47,20 @@ const Hero = () => {
           </span>
         </motion.div>
 
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
+          className="text-center text-[15px] sm:text-[17px] md:text-[18px] font-medium tracking-[-0.005em] text-[#9CA3AF] mb-4 sm:mb-5"
+        >
+          Hi, I’m <span className="text-[#EDEDED]">Aniket</span>.
+        </motion.p>
+
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-          className="max-w-5xl text-[46px] xs:text-[54px] leading-[1.04] sm:text-[68px] md:text-[84px] lg:text-[96px] font-bold tracking-[-0.035em] text-[#EDEDED]"
+          className="mx-auto max-w-5xl text-center text-[46px] xs:text-[54px] leading-[1.04] sm:text-[68px] md:text-[84px] lg:text-[96px] font-bold tracking-[-0.035em] text-[#EDEDED]"
         >
           Designing Experiences
           <br />
@@ -62,7 +71,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-8 sm:mt-10 max-w-2xl text-[18px] sm:text-[19px] md:text-[20px] leading-[1.55] text-[#9CA3AF]"
+          className="mt-8 sm:mt-10 mx-auto max-w-2xl text-center text-[18px] sm:text-[19px] md:text-[20px] leading-[1.55] text-[#9CA3AF]"
         >
           UI/UX Designer crafting intuitive, engaging, and human-centered digital products.
         </motion.p>
@@ -71,7 +80,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-10 sm:mt-12 flex items-center gap-5 sm:gap-6 flex-wrap"
+          className="mt-10 sm:mt-12 flex items-center justify-center gap-5 sm:gap-6 flex-wrap"
         >
           <a href="#work" onClick={handleViewWork} className="btn-primary group">
             View Work

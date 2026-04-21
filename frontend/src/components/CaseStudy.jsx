@@ -159,7 +159,7 @@ const CaseStudy = () => {
             </div>
 
             <div
-              className="relative overflow-hidden rounded-[24px] border border-white/[0.06] bg-[#0E0E14] p-4 md:p-8"
+              className="relative overflow-hidden rounded-[24px] border border-white/[0.06] bg-[#0E0E14]"
               style={{
                 boxShadow:
                   "0 1px 0 rgba(255,255,255,0.04) inset, 0 40px 80px -40px rgba(0,0,0,0.6)",
@@ -168,7 +168,7 @@ const CaseStudy = () => {
               <img
                 src={caseStudy.screensImage}
                 alt={`${caseStudy.title} — all app screens`}
-                className="w-full h-auto block rounded-xl"
+                className="w-full h-auto block"
                 loading="lazy"
               />
             </div>

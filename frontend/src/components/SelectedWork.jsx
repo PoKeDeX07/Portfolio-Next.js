@@ -35,11 +35,11 @@ const ProjectCard = ({ project, index }) => {
       <div className="grid md:grid-cols-5 gap-0">
         {/* LEFT: Image */}
         <div className="md:col-span-3 p-5 md:p-8">
-          <div className="relative h-[240px] md:h-[360px] rounded-2xl overflow-hidden bg-[#0B0B0F]">
+          <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-[#0B0B0F]">
             <img
               src={project.image}
               alt={project.title}
-              className="w-full h-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
+              className="absolute inset-0 w-full h-full object-contain transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
               loading="lazy"
             />
             <div
@@ -52,7 +52,7 @@ const ProjectCard = ({ project, index }) => {
         </div>
 
         {/* RIGHT: Content */}
-        <div className="md:col-span-2 p-6 md:p-10 flex flex-col justify-between min-h-[260px] md:min-h-[360px]">
+        <div className="md:col-span-2 p-6 md:p-10 flex flex-col justify-between gap-8">
           <div>
             <div className="flex flex-wrap gap-2">
               {project.tags.map((tag) => (
