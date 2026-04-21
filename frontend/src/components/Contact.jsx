@@ -39,7 +39,7 @@ const Contact = () => {
   return (
     <section id="contact" className="relative py-24 md:py-32 border-t border-white/[0.04]">
       <div className="section-container">
-        <div className="grid md:grid-cols-12 gap-12 md:gap-16 items-start">
+        <div className="grid md:grid-cols-12 gap-12 md:gap-16 items-stretch">
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -100,9 +100,9 @@ const Contact = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="md:col-span-6 rounded-[24px] border border-white/[0.06] bg-[#13131A]/60 p-6 md:p-10 backdrop-blur-sm"
+            className="md:col-span-6 rounded-[24px] border border-white/[0.06] bg-[#13131A]/60 p-6 md:p-10 backdrop-blur-sm flex flex-col h-full"
           >
-            <div className="space-y-5">
+            <div className="space-y-5 flex-1">
               <Field label="Your name" htmlFor="name">
                 <input
                   id="name"
