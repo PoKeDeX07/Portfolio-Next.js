@@ -57,8 +57,7 @@ const Contact = () => {
               <span className="text-gradient">great.</span>
             </h2>
             <p className="mt-6 max-w-md text-[16px] leading-[1.7] text-[#9CA3AF]">
-              I’m taking on a limited number of product engagements for Q3 2025.
-              If you’re shipping something you care about — I’d love to hear about it.
+              I’m currently heads-down at my full-time role and not taking on new projects — but always open to a conversation. If you’re working on something interesting, drop a note.
             </p>
 
             <div className="mt-10 flex flex-wrap items-center gap-4">

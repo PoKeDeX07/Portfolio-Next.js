@@ -39,12 +39,11 @@ const Hero = () => {
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="flex items-center gap-2 mb-8 sm:mb-10"
         >
-          <span className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] text-[12px] sm:text-[13px] text-[#9CA3AF]">
+          <span className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.025] border border-white/[0.06] text-[12px] sm:text-[13px] text-[#9CA3AF]/80">
             <span className="relative flex h-1.5 w-1.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00D4FF] opacity-75" />
-              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#00D4FF]" />
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#F59E0B]/80" />
             </span>
-            Available for select projects — Q3 2025
+            Heads-down at work — not taking new projects
           </span>
         </motion.div>
 
