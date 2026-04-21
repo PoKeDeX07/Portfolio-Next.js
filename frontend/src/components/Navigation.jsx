@@ -42,7 +42,7 @@ const Navigation = () => {
             <span className="absolute inset-0 accent-gradient-bg opacity-90" />
             <span className="relative text-[13px] font-bold text-[#0B0B0F] tracking-tight">AK</span>
           </span>
-          <span className="text-[15px] font-semibold tracking-tight text-[#EDEDED]">
+          <span className="text-[15px] font-semibold tracking-tight text-[#EDEDED] whitespace-nowrap">
             {profile.name}
           </span>
         </a>
