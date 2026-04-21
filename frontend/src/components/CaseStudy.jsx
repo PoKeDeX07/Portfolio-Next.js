@@ -133,6 +133,47 @@ const CaseStudy = () => {
             ))}
           </div>
         </div>
+
+        {/* Final — all screens mockup */}
+        {caseStudy.screensImage && (
+          <motion.div
+            initial={{ opacity: 0, y: 32 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-24 md:mt-32"
+          >
+            <div className="flex items-end justify-between gap-6 mb-8">
+              <div>
+                <div className="flex items-center gap-2 text-[12px] tracking-[0.2em] uppercase text-[#9CA3AF]">
+                  <span className="w-8 h-px bg-white/20" />
+                  Final Designs
+                </div>
+                <h3 className="mt-4 text-[24px] md:text-[32px] leading-[1.15] font-semibold tracking-[-0.025em] text-[#EDEDED] max-w-2xl">
+                  Every screen — end to end.
+                </h3>
+              </div>
+              <div className="hidden md:block text-right text-[12px] tracking-[0.2em] uppercase text-[#9CA3AF]">
+                Mobile · Nova Trade
+              </div>
+            </div>
+
+            <div
+              className="relative overflow-hidden rounded-[24px] border border-white/[0.06] bg-[#0E0E14] p-4 md:p-8"
+              style={{
+                boxShadow:
+                  "0 1px 0 rgba(255,255,255,0.04) inset, 0 40px 80px -40px rgba(0,0,0,0.6)",
+              }}
+            >
+              <img
+                src={caseStudy.screensImage}
+                alt={`${caseStudy.title} — all app screens`}
+                className="w-full h-auto block rounded-xl"
+                loading="lazy"
+              />
+            </div>
+          </motion.div>
+        )}
       </div>
     </section>
   );

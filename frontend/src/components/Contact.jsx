@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Download, Mail, ExternalLink } from "lucide-react";
+import { ArrowRight, Download, ExternalLink } from "lucide-react";
 import { toast } from "sonner";
 import { profile } from "../data/mock";
 
@@ -74,13 +74,9 @@ const Contact = () => {
                   className="transition-transform duration-300 group-hover:translate-y-0.5"
                 />
               </a>
-              <a href={`mailto:${profile.email}`} className="btn-ghost group">
-                <Mail size={16} />
-                {profile.email}
-              </a>
             </div>
 
-            <div className="mt-14 grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div className="mt-14 grid grid-cols-2 sm:grid-cols-3 gap-3">
               {profile.socials.map((s) => (
                 <a
                   key={s.label}

@@ -14,9 +14,8 @@ export const profile = {
   resumeUrl: "/resume.pdf",
   socials: [
     { label: "Behance", href: "https://www.behance.net/aniketkulkarni10" },
-    { label: "Dribbble", href: "https://dribbble.com/" },
-    { label: "LinkedIn", href: "https://linkedin.com/" },
-    { label: "Email", href: "mailto:Kulkarnianiket0715@gmail.com" },
+    { label: "Dribbble", href: "https://dribbble.com/PoKeDeX07" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/aniket-kulkarni-773595217/" },
   ],
 };
 
@@ -102,6 +101,8 @@ export const caseStudy = {
   platforms: ["iOS", "Android", "Web"],
   image:
     "https://customer-assets.emergentagent.com/job_aniket-design/artifacts/07ocntqc_Nova%20Trade.jpg",
+  screensImage:
+    "https://customer-assets.emergentagent.com/job_aniket-design/artifacts/ux0ry4jh_Frame%207.jpg",
   sections: [
     {
       kind: "problem",
@@ -144,6 +145,7 @@ export const experience = [
     id: "exp-1",
     role: "Product Designer",
     company: "ScaleUp Software",
+    companyUrl: "https://scaleupsoftware.io",
     location: "Mumbai · Full-time",
     period: "Oct 2025 — Present",
     summary:
@@ -153,15 +155,18 @@ export const experience = [
     id: "exp-2",
     role: "UI/UX Designer",
     company: "Cargoflash Infotech",
+    companyUrl: "https://cargoflash.com",
     location: "Mumbai · Full-time",
     period: "Aug 2023 — Oct 2025",
     summary:
       "Designed user-friendly interfaces for aviation SaaS products, handling wireframes through high-fidelity UI. Contributed to the live project Octoloop.com and helped build a consistent Figma design system.",
+    links: [{ text: "Octoloop.com", href: "https://octoloop.com" }],
   },
   {
     id: "exp-3",
     role: "UI/UX Consultant",
     company: "Cargoflash Infotech",
+    companyUrl: "https://cargoflash.com",
     location: "Mumbai · Contract",
     period: "Aug 2022 — Aug 2023",
     summary:
@@ -171,6 +176,7 @@ export const experience = [
     id: "exp-4",
     role: "3D Design Intern",
     company: "Iqonic Designs",
+    companyUrl: "https://iqonic.design/",
     location: "Remote · Internship",
     period: "Sep 2021 — Dec 2021",
     summary:

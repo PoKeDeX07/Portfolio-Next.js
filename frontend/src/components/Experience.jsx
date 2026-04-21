@@ -1,6 +1,34 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
 import { experience } from "../data/mock";
+
+// Split a summary string by the exact link texts and render inline anchors.
+const renderSummary = (text, links = []) => {
+  if (!links || links.length === 0) return text;
+  const pattern = new RegExp(
+    `(${links.map((l) => l.text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})`,
+    "g"
+  );
+  const parts = text.split(pattern);
+  return parts.map((part, i) => {
+    const match = links.find((l) => l.text === part);
+    if (match) {
+      return (
+        <a
+          key={i}
+          href={match.href}
+          target="_blank"
+          rel="noreferrer"
+          className="text-[#EDEDED] underline decoration-white/30 underline-offset-[3px] hover:decoration-white hover:text-white transition-colors"
+        >
+          {part}
+        </a>
+      );
+    }
+    return <span key={i}>{part}</span>;
+  });
+};
 
 const Experience = () => {
   return (
@@ -50,7 +78,23 @@ const Experience = () => {
                         {item.role}
                       </div>
                       <div className="mt-1 text-[13px] text-[#9CA3AF]">
-                        {item.company} · {item.location}
+                        {item.companyUrl ? (
+                          <a
+                            href={item.companyUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex items-center gap-1 text-[#EDEDED] hover:text-white transition-colors group/link"
+                          >
+                            {item.company}
+                            <ArrowUpRight
+                              size={12}
+                              className="opacity-60 transition-all duration-300 group-hover/link:opacity-100 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
+                            />
+                          </a>
+                        ) : (
+                          <span className="text-[#EDEDED]">{item.company}</span>
+                        )}
+                        <span className="text-[#9CA3AF]"> · {item.location}</span>
                       </div>
                     </div>
                     <div className="text-[12px] tracking-[0.15em] uppercase text-[#9CA3AF]">
@@ -58,7 +102,7 @@ const Experience = () => {
                     </div>
                   </div>
                   <p className="mt-4 text-[15px] leading-[1.7] text-[#9CA3AF] max-w-xl">
-                    {item.summary}
+                    {renderSummary(item.summary, item.links)}
                   </p>
                 </motion.li>
               ))}
