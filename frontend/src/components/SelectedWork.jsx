@@ -4,7 +4,23 @@ import { ArrowUpRight } from "lucide-react";
 import { projects } from "../data/mock";
 
 const ProjectCard = ({ project, index }) => {
+  const Wrapper = ({ children }) =>
+    project.link ? (
+      <a
+        href={project.link}
+        target="_blank"
+        rel="noreferrer"
+        aria-label={`${project.title} — view on Behance`}
+        className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30 rounded-[24px]"
+      >
+        {children}
+      </a>
+    ) : (
+      <>{children}</>
+    );
+
   return (
+    <Wrapper>
     <motion.article
       initial={{ opacity: 0, y: 32 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -73,6 +89,7 @@ const ProjectCard = ({ project, index }) => {
         </div>
       </div>
     </motion.article>
+    </Wrapper>
   );
 };
 

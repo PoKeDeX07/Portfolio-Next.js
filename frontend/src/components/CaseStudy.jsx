@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { caseStudy, projects } from "../data/mock";
+import { caseStudy } from "../data/mock";
 
 const stepColor = {
   problem: "#FF6A5C",
@@ -15,7 +15,6 @@ const CaseStudy = () => {
     offset: ["start end", "end start"],
   });
   const imgY = useTransform(scrollYProgress, [0, 1], ["-4%", "8%"]);
-  const hero = projects.find((p) => p.id === caseStudy.projectId);
 
   return (
     <section
@@ -47,14 +46,14 @@ const CaseStudy = () => {
             <Meta label="Duration" value={caseStudy.duration} />
             <Meta label="Team" value={caseStudy.team} />
             <Meta label="Platforms" value={caseStudy.platforms.join(" · ")} />
-            <Meta label="Role" value={hero?.role || "Design Lead"} />
+            <Meta label="Role" value="UI/UX Designer" />
           </div>
         </motion.div>
 
         {/* Hero visual */}
         <div className="relative overflow-hidden rounded-[24px] border border-white/[0.06] bg-[#13131A] aspect-[16/9] mb-24">
           <motion.img
-            src={hero?.image}
+            src={caseStudy.image}
             alt={caseStudy.title}
             style={{ y: imgY }}
             className="absolute inset-0 w-full h-[115%] object-cover"
@@ -110,11 +109,7 @@ const CaseStudy = () => {
                   {s.title}
                 </div>
                 <h3 className="text-[26px] md:text-[32px] leading-[1.2] font-semibold tracking-[-0.02em] text-[#EDEDED]">
-                  {s.title === "Problem"
-                    ? "Traders had data — not direction."
-                    : s.title === "Process"
-                    ? "Listen, audit, reframe."
-                    : "A workspace that breathes."}
+                  {s.heading}
                 </h3>
                 <p className="mt-4 text-[16px] leading-[1.7] text-[#9CA3AF] max-w-xl">
                   {s.body}
