@@ -1,44 +1,50 @@
 // Mock data for Aniket Kulkarni's portfolio
-// NOTE: All content here is mocked (frontend-only). It will be wired to the backend later.
+// Populated from the designer's resume. Projects remain curated case studies.
 
 export const profile = {
   name: "Aniket Kulkarni",
   firstName: "Aniket",
   location: "Mumbai, India",
   title: "UI/UX Designer",
-  subtitle: "Mobile App Designer",
+  subtitle: "Product Designer",
   experience: "3.5+ Years",
-  email: "hello@aniketkulkarni.design",
-  bio: "UI/UX designer with 3.5 years of experience crafting intuitive and engaging digital experiences. Based in Mumbai, I blend creativity with usability to build impactful designs. Outside of work, you'll find me playing football or diving into video games.",
+  email: "Kulkarnianiket0715@gmail.com",
+  phone: "+91 90046 48041",
+  bio: "UI/UX designer with 3.5 years of experience designing user-friendly digital products across fintech, e-commerce, and lifestyle domains. Based in Mumbai, I translate complex ideas into clean, functional interfaces — focused on user empathy, responsive design, and collaborative problem-solving. Outside of work, you'll find me playing football or diving into video games.",
   resumeUrl: "/resume.pdf",
   socials: [
+    { label: "Behance", href: "https://behance.net/aniketkulkarni10" },
     { label: "Dribbble", href: "https://dribbble.com/" },
-    { label: "Behance", href: "https://behance.net/" },
     { label: "LinkedIn", href: "https://linkedin.com/" },
-    { label: "Twitter", href: "https://twitter.com/" },
+    { label: "Email", href: "mailto:Kulkarnianiket0715@gmail.com" },
   ],
 };
 
 export const skills = [
   "User Research",
-  "Wireframing",
-  "Prototyping",
-  "Interaction Design",
-  "Design Systems",
-  "Mobile UX",
   "Usability Testing",
-  "Motion Design",
-  "Accessibility",
+  "Journey Mapping",
+  "Personas",
+  "Storyboarding",
   "Information Architecture",
+  "Design Systems",
+  "Wireframing",
+  "High-fidelity UI",
+  "Responsive Design",
+  "Interaction Design",
+  "3D Assets",
 ];
 
 export const tools = [
   { name: "Figma", role: "Design & Prototyping" },
-  { name: "Framer", role: "Interactive Prototypes" },
-  { name: "Protopie", role: "Advanced Micro-interactions" },
-  { name: "Notion", role: "Docs & Systems" },
-  { name: "Miro", role: "Workshops & Flows" },
+  { name: "Adobe XD", role: "Wireframes & Flows" },
+  { name: "Sketch", role: "UI Design" },
+  { name: "FigJam", role: "Workshops & Mapping" },
+  { name: "Miro", role: "Research & Systems" },
   { name: "Photoshop", role: "Visual Assets" },
+  { name: "Illustrator", role: "Iconography & Vectors" },
+  { name: "Blender", role: "3D Assets" },
+  { name: "ChatGPT", role: "Docs & Exploration" },
 ];
 
 export const projects = [
@@ -138,30 +144,54 @@ export const caseStudy = {
 export const experience = [
   {
     id: "exp-1",
-    role: "Senior Product Designer",
-    company: "Lumen Labs",
-    location: "Mumbai · Hybrid",
-    period: "2023 — Present",
+    role: "Product Designer",
+    company: "ScaleUp Software",
+    location: "Mumbai · Full-time",
+    period: "Oct 2025 — Present",
     summary:
-      "Leading design on two flagship fintech products. Shipping a unified design system and mentoring two junior designers.",
+      "Designing product experiences end-to-end — from discovery and wireframes to high-fidelity UI. Partnering with product and engineering to ship considered, measurable work.",
   },
   {
     id: "exp-2",
-    role: "Product Designer",
-    company: "Northwind Studio",
-    location: "Remote",
-    period: "2022 — 2023",
+    role: "UI/UX Designer",
+    company: "Cargoflash Infotech",
+    location: "Mumbai · Full-time",
+    period: "Aug 2023 — Oct 2025",
     summary:
-      "Designed SaaS dashboards and consumer mobile flows for 6 startups across fintech, logistics, and healthtech.",
+      "Designed user-friendly interfaces for aviation SaaS products, handling wireframes through high-fidelity UI. Contributed to the live project Octoloop.com and helped build a consistent Figma design system.",
   },
   {
     id: "exp-3",
-    role: "UI/UX Designer",
-    company: "Pixelmint",
-    location: "Pune",
-    period: "2021 — 2022",
+    role: "UI/UX Consultant",
+    company: "Cargoflash Infotech",
+    location: "Mumbai · Contract",
+    period: "Aug 2022 — Aug 2023",
     summary:
-      "Built interaction systems and prototyped B2B flows end-to-end — from discovery sessions to engineering handoff.",
+      "Shaped early-stage product design by creating wireframes, user flows, and UI concepts. Worked with stakeholders to translate requirements into intuitive experiences for aviation platforms.",
+  },
+  {
+    id: "exp-4",
+    role: "3D Design Intern",
+    company: "Iqonic Designs",
+    location: "Remote · Internship",
+    period: "Sep 2021 — Dec 2021",
+    summary:
+      "Used Blender and Illustrator to create 3D assets and UI elements for digital product packs — shipped as commercial design offerings on the company's website.",
+  },
+];
+
+export const education = [
+  {
+    id: "edu-1",
+    institution: "Arena Animation",
+    degree: "Design & Visualisation",
+    period: "2019 — 2023",
+  },
+  {
+    id: "edu-2",
+    institution: "Thakur Ramnarayan College",
+    degree: "Higher Secondary",
+    period: "2017 — 2019",
   },
 ];
 
