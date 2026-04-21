@@ -1,0 +1,215 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #0B0B0F;
+  --bg-elevated: #13131A;
+  --text: #EDEDED;
+  --text-muted: #9CA3AF;
+  --accent-from: #7C5CFF;
+  --accent-to: #00D4FF;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(255, 255, 255, 0.18);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--bg);
+  color: var(--text);
+  letter-spacing: -0.01em;
+  overflow-x: hidden;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+/* Noise texture overlay */
+.noise-overlay::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #7C5CFF 0%, #00D4FF 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.accent-gradient-bg {
+  background: linear-gradient(135deg, #7C5CFF 0%, #00D4FF 100%);
+}
+
+/* Hero mesh gradient */
+.mesh-gradient {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.mesh-gradient::before,
+.mesh-gradient::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.35;
+  will-change: transform;
+}
+
+.mesh-gradient::before {
+  width: 600px;
+  height: 600px;
+  background: #7C5CFF;
+  top: -150px;
+  left: -100px;
+  animation: floatA 18s ease-in-out infinite alternate;
+}
+
+.mesh-gradient::after {
+  width: 520px;
+  height: 520px;
+  background: #00D4FF;
+  bottom: -150px;
+  right: -100px;
+  animation: floatB 22s ease-in-out infinite alternate;
+}
+
+@keyframes floatA {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(120px, 80px) scale(1.15); }
+}
+
+@keyframes floatB {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-100px, -60px) scale(1.1); }
+}
+
+/* Grid background */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+}
+
+/* Scroll hint */
+@keyframes scrollHint {
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  50%      { transform: translateY(8px); opacity: 1; }
+}
+.scroll-hint { animation: scrollHint 2.2s ease-in-out infinite; }
+
+/* Section container */
+.section-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+@media (min-width: 768px) {
+  .section-container { padding: 0 40px; }
+}
+
+/* Buttons */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 26px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 15px;
+  color: #0B0B0F;
+  background: #EDEDED;
+  transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(255,255,255,0.15);
+}
+.btn-primary:hover {
+  transform: translateY(-1px);
+  background: #ffffff;
+  box-shadow: 0 10px 40px -10px rgba(124, 92, 255, 0.5);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 26px;
+  border-radius: 999px;
+  font-weight: 500;
+  font-size: 15px;
+  color: #EDEDED;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.12);
+  transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+.btn-ghost:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.24);
+  transform: translateY(-1px);
+}
+
+/* Selection color */
+::selection {
+  background: rgba(124, 92, 255, 0.35);
+  color: #fff;
+}
+
+@layer base {
+  :root {
+    --background: 240 10% 4%;
+    --foreground: 0 0% 93%;
+    --card: 240 10% 6%;
+    --card-foreground: 0 0% 93%;
+    --popover: 240 10% 6%;
+    --popover-foreground: 0 0% 93%;
+    --primary: 0 0% 93%;
+    --primary-foreground: 240 10% 4%;
+    --secondary: 240 6% 12%;
+    --secondary-foreground: 0 0% 93%;
+    --muted: 240 6% 12%;
+    --muted-foreground: 220 9% 65%;
+    --accent: 240 6% 12%;
+    --accent-foreground: 0 0% 93%;
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 6% 14%;
+    --input: 240 6% 14%;
+    --ring: 252 100% 68%;
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}

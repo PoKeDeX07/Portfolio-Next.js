@@ -1,0 +1,117 @@
+import React from "react";
+import { motion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
+import { projects } from "../data/mock";
+
+const ProjectCard = ({ project, index }) => {
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 32 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.7, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] }}
+      className="group relative overflow-hidden rounded-[24px] border border-white/[0.06] bg-[#13131A]/60 backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 hover:border-white/[0.14]"
+      style={{
+        boxShadow:
+          "0 1px 0 rgba(255,255,255,0.04) inset, 0 30px 60px -30px rgba(0,0,0,0.5)",
+      }}
+    >
+      <div className="grid md:grid-cols-5 gap-0">
+        {/* LEFT: Image */}
+        <div className="md:col-span-3 p-5 md:p-8">
+          <div className="relative h-[240px] md:h-[360px] rounded-2xl overflow-hidden bg-[#0B0B0F]">
+            <img
+              src={project.image}
+              alt={project.title}
+              className="w-full h-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
+              loading="lazy"
+            />
+            <div
+              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+              style={{
+                background: `radial-gradient(circle at 50% 90%, ${project.accent}22, transparent 60%)`,
+              }}
+            />
+          </div>
+        </div>
+
+        {/* RIGHT: Content */}
+        <div className="md:col-span-2 p-6 md:p-10 flex flex-col justify-between min-h-[260px] md:min-h-[360px]">
+          <div>
+            <div className="flex flex-wrap gap-2">
+              {project.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="px-2.5 py-1 rounded-full border border-white/[0.08] bg-white/[0.03] text-[11px] tracking-wide text-[#9CA3AF]"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+
+            <h3 className="mt-6 text-[22px] md:text-[24px] leading-[1.2] font-semibold tracking-[-0.02em] text-[#EDEDED] line-clamp-2">
+              {project.title}
+            </h3>
+
+            <p className="mt-3 text-[14px] leading-[1.65] text-[#9CA3AF] line-clamp-3">
+              {project.description}
+            </p>
+          </div>
+
+          <div className="mt-8 flex items-end justify-between">
+            <div className="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF]">
+              {project.year} · {project.role}
+            </div>
+
+            <span
+              aria-hidden="true"
+              className="w-11 h-11 rounded-full border border-white/[0.08] bg-white/[0.04] flex items-center justify-center text-[#EDEDED] transition-all duration-500 group-hover:bg-white group-hover:text-[#0B0B0F] group-hover:translate-x-1 group-hover:-translate-y-1"
+            >
+              <ArrowUpRight size={18} />
+            </span>
+          </div>
+        </div>
+      </div>
+    </motion.article>
+  );
+};
+
+const SelectedWork = () => {
+  return (
+    <section id="work" className="relative py-24 md:py-32">
+      <div className="section-container">
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="flex items-end justify-between gap-6 mb-14 md:mb-20"
+        >
+          <div>
+            <div className="flex items-center gap-2 text-[12px] tracking-[0.2em] uppercase text-[#9CA3AF]">
+              <span className="w-8 h-px bg-white/20" />
+              Selected Work
+            </div>
+            <h2 className="mt-5 text-[32px] sm:text-[40px] md:text-[52px] leading-[1.1] font-semibold tracking-[-0.03em] text-[#EDEDED] max-w-3xl">
+              A short reel of projects I’m most proud of.
+            </h2>
+          </div>
+          <div className="hidden md:block text-right">
+            <div className="text-[12px] tracking-[0.2em] uppercase text-[#9CA3AF]">Count</div>
+            <div className="text-[28px] font-semibold tracking-tight text-[#EDEDED]">
+              {String(projects.length).padStart(2, "0")}
+            </div>
+          </div>
+        </motion.div>
+
+        <div className="grid grid-cols-1 gap-6 md:gap-8">
+          {projects.map((p, i) => (
+            <ProjectCard key={p.id} project={p} index={i} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default SelectedWork;
