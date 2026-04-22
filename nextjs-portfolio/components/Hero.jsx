@@ -48,9 +48,9 @@ const Hero = () => {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
-          className="text-center text-[15px] sm:text-[17px] md:text-[18px] font-medium tracking-[-0.005em] text-[#9CA3AF] mb-4 sm:mb-5"
+          className="text-center text-[32px] sm:text-[42px] md:text-[52px] font-medium tracking-[-0.005em] text-[#9CA3AF] mb-4 sm:mb-5"
         >
-          Hi, I’m <span className="text-[#EDEDED]">Aniket</span>.
+          I'm <span className="text-[#EDEDED]">Aniket</span>
         </motion.p>
 
         <motion.h1
