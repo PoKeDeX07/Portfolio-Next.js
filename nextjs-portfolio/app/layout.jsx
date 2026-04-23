@@ -1,7 +1,6 @@
 import { Plus_Jakarta_Sans } from 'next/font/google';
 import { Toaster } from '@/components/ui/sonner';
 import { ThemeProvider } from './providers';
-import { Analytics } from '@vercel/analytics/react';
 import './globals.css';
 
 const plusJakarta = Plus_Jakarta_Sans({
@@ -60,7 +59,6 @@ export default function RootLayout({ children }) {
           {children}
           <Toaster position="bottom-right" theme="system" />
         </ThemeProvider>
-        <Analytics />
       </body>
     </html>
   );
