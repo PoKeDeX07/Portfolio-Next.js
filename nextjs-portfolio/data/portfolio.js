@@ -57,7 +57,7 @@ export const projects = [
     tags: ['Mobile', 'Fintech', 'Conversational UI'],
     description:
       'An AI-powered chatbot built into the FinTrust finance app — giving users instant, intelligent support for financial queries and app issues. Operating 24/7 with privacy and security at its core, it trims support time, lifts engagement, and quietly nudges users toward better financial literacy.',
-    image: '/fintrust.jpg',
+    image: '/Fintrust.jpg',
     year: '2025',
     role: 'UI/UX Designer',
     accent: '#7C5CFF',
@@ -101,8 +101,7 @@ export const caseStudy = {
   platforms: ['iOS', 'Android', 'Web'],
   image:
     'https://customer-assets.emergentagent.com/job_aniket-design/artifacts/07ocntqc_Nova%20Trade.jpg',
-  screensImage:
-    'https://customer-assets.emergentagent.com/job_aniket-design/artifacts/ux0ry4jh_Frame%207.jpg',
+  screensImage: '/NovaTrade Screens.jpg',
   sections: [
     {
       kind: 'problem',
