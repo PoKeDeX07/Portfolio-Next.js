@@ -82,7 +82,7 @@ export const projects = [
     tags: ['Landing Page', 'E-commerce', 'Concept'],
     description:
       'A concept UI for a boutique furniture brand — balancing editorial whitespace with lifestyle imagery. The hero pairs considered typography with a product carousel, letting the craft of each piece do the heavy lifting instead of loud visuals.',
-    image: '/furneat.jpg',
+    image: '/Furneat.jpg',
     year: '2022',
     role: 'UI Designer',
     accent: '#7C5CFF',
