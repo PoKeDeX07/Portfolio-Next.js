@@ -101,7 +101,7 @@ export const caseStudy = {
   platforms: ['iOS', 'Android', 'Web'],
   image:
     'https://customer-assets.emergentagent.com/job_aniket-design/artifacts/07ocntqc_Nova%20Trade.jpg',
-  screensImage: '/NovaTrade Screens.jpg',
+  screensImage: '/NovaTrade Screenss.svg',
   sections: [
     {
       kind: 'problem',
@@ -184,8 +184,8 @@ export const experience = [
 ];
 
 export const navLinks = [
-  { label: 'Work', href: '#work' },
   { label: 'About', href: '#about' },
+  { label: 'Work', href: '#work' },
   { label: 'Case Study', href: '#case-study' },
   { label: 'Experience', href: '#experience' },
   { label: 'Contact', href: '#contact' },
