@@ -82,10 +82,11 @@ const Navigation = () => {
           onClick={(e) => handleNav(e, '#top')}
           className="flex items-center gap-2 group"
         >
-          <span className="relative w-8 h-8 rounded-xl overflow-hidden flex items-center justify-center">
-            <span className="absolute inset-0 accent-gradient-bg opacity-90" />
-            <span className="relative text-[13px] font-bold text-[#0B0B0F] tracking-tight">AK</span>
-          </span>
+          <img 
+            src="/aniket_kulkarni_monogram.svg" 
+            alt="Monogram" 
+            className="w-6 h-6 object-contain"
+          />
           <span className="text-[15px] font-semibold tracking-tight text-[#EDEDED] whitespace-nowrap">
             {profile.name}
           </span>
