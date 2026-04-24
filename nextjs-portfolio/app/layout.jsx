@@ -1,5 +1,6 @@
 import { Plus_Jakarta_Sans } from 'next/font/google';
 import { Toaster } from '@/components/ui/sonner';
+import { Analytics } from '@vercel/analytics/react';
 import './globals.css';
 
 const plusJakarta = Plus_Jakarta_Sans({
@@ -34,6 +35,7 @@ export default function RootLayout({ children }) {
       <body className="noise-overlay font-sans">
         {children}
         <Toaster position="bottom-right" theme="dark" />
+        <Analytics />
       </body>
     </html>
   );
