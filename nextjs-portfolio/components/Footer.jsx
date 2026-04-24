@@ -9,12 +9,11 @@ const Footer = () => {
       <div className="section-container">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <div className="flex items-center gap-3">
-            <span className="relative w-7 h-7 rounded-lg overflow-hidden flex items-center justify-center">
-              <span className="absolute inset-0 accent-gradient-bg opacity-90" />
-              <span className="relative text-[11px] font-bold text-[#0B0B0F] tracking-tight">
-                AK
-              </span>
-            </span>
+            <img 
+              src="/aniket_kulkarni_monogram.svg" 
+              alt="Monogram" 
+              className="w-5 h-5 object-contain"
+            />
             <span className="text-[14px] text-[#EDEDED] font-medium">
               {profile.name}
             </span>
