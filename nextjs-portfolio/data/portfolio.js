@@ -57,8 +57,7 @@ export const projects = [
     tags: ['Mobile', 'Fintech', 'Conversational UI'],
     description:
       'An AI-powered chatbot built into the FinTrust finance app — giving users instant, intelligent support for financial queries and app issues. Operating 24/7 with privacy and security at its core, it trims support time, lifts engagement, and quietly nudges users toward better financial literacy.',
-    image:
-      'https://customer-assets.emergentagent.com/job_aniket-design/artifacts/qhtaehrr_Fintrust.jpg',
+    image: '/fintrust.jpg',
     year: '2025',
     role: 'UI/UX Designer',
     accent: '#7C5CFF',
@@ -83,8 +82,7 @@ export const projects = [
     tags: ['Landing Page', 'E-commerce', 'Concept'],
     description:
       'A concept UI for a boutique furniture brand — balancing editorial whitespace with lifestyle imagery. The hero pairs considered typography with a product carousel, letting the craft of each piece do the heavy lifting instead of loud visuals.',
-    image:
-      'https://customer-assets.emergentagent.com/job_aniket-design/artifacts/rgo1d5q9_Furneat.jpg',
+    image: '/furneat.jpg',
     year: '2022',
     role: 'UI Designer',
     accent: '#7C5CFF',
