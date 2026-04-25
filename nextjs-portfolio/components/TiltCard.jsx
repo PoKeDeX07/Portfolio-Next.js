@@ -53,21 +53,7 @@ export function TiltCard({ children, className = '', intensity = 10 }) {
         {children}
       </div>
       
-      {/* Shine effect */}
-      <motion.div
-        className="absolute inset-0 rounded-[24px] pointer-events-none"
-        style={{
-          background: `radial-gradient(
-            circle at ${(x.get() || 0.5) * 100}% ${(y.get() || 0.5) * 100}%,
-            rgba(255, 255, 255, 0.1) 0%,
-            transparent 50%
-          )`,
-        }}
-        animate={{
-          opacity: isHovered ? 1 : 0,
-        }}
-        transition={{ duration: 0.3 }}
-      />
+
     </motion.div>
   );
 }
