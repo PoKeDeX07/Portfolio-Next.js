@@ -5,7 +5,7 @@ const Footer = () => {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative border-t border-white/[0.06] py-12 md:py-14">
+    <footer className="relative border-t border-[var(--border)] py-12 md:py-14">
       <div className="section-container">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <div className="flex items-center gap-3">
@@ -14,10 +14,10 @@ const Footer = () => {
               alt="Monogram" 
               className="w-5 h-5 object-contain"
             />
-            <span className="text-[14px] text-[#EDEDED] font-medium">
+            <span className="text-[14px] text-[var(--text)] font-medium">
               {profile.name}
             </span>
-            <span className="text-[13px] text-[#9CA3AF] hidden sm:inline">
+            <span className="text-[13px] text-[var(--text-muted)] hidden sm:inline">
               · {profile.title}
             </span>
           </div>
@@ -27,7 +27,7 @@ const Footer = () => {
               <li key={l.href}>
                 <a
                   href={l.href}
-                  className="text-[13px] text-[#9CA3AF] hover:text-[#EDEDED] transition-colors"
+                  className="text-[13px] text-[var(--text-muted)] hover:text-[var(--text)] transition-colors"
                 >
                   {l.label}
                 </a>
@@ -35,7 +35,7 @@ const Footer = () => {
             ))}
           </ul>
 
-          <div className="text-[12px] text-[#9CA3AF]">
+          <div className="text-[12px] text-[var(--text-muted)]">
             © {year} {profile.name}. Designed with intention in Mumbai.
           </div>
         </div>

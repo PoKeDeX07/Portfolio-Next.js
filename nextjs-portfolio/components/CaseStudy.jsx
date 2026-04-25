@@ -33,18 +33,18 @@ const CaseStudy = () => {
           transition={{ duration: 0.6 }}
           className="mb-14 md:mb-20"
         >
-          <div className="flex items-center gap-2 text-[12px] tracking-[0.2em] uppercase text-[#9CA3AF]">
-            <span className="w-8 h-px bg-white/20" />
+          <div className="flex items-center gap-2 text-[12px] tracking-[0.2em] uppercase text-[var(--text-muted)]">
+            <span className="w-8 h-px bg-[var(--border-hover)]" />
             {caseStudy.label}
           </div>
-          <h2 className="mt-5 text-[32px] sm:text-[40px] md:text-[56px] leading-[1.08] font-semibold tracking-[-0.03em] text-[#EDEDED]">
+          <h2 className="mt-5 text-[32px] sm:text-[40px] md:text-[56px] leading-[1.08] font-semibold tracking-[-0.03em] text-[var(--text)]">
             {caseStudy.title}
           </h2>
-          <p className="mt-5 max-w-2xl text-[17px] md:text-[18px] leading-[1.6] text-[#9CA3AF]">
+          <p className="mt-5 max-w-2xl text-[17px] md:text-[18px] leading-[1.6] text-[var(--text-muted)]">
             {caseStudy.subtitle}
           </p>
 
-          <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-6 border-t border-white/[0.06] pt-8">
+          <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-6 border-t border-[var(--border)] pt-8">
             <Meta label="Duration" value={caseStudy.duration} />
             <Meta label="Team" value={caseStudy.team} />
             <Meta label="Platforms" value={caseStudy.platforms.join(' · ')} />
@@ -52,7 +52,7 @@ const CaseStudy = () => {
           </div>
         </motion.div>
 
-        <div className="relative overflow-hidden rounded-[24px] border border-white/[0.06] bg-[#13131A] aspect-[16/9] mb-24">
+        <div className="relative overflow-hidden rounded-[24px] border border-[var(--border)] bg-[var(--bg-elevated)] aspect-[16/9] mb-24">
           <motion.div style={{ y: imgY }} className="absolute inset-0 w-full h-[115%]">
             <Image
               src={caseStudy.image}
@@ -63,23 +63,23 @@ const CaseStudy = () => {
               priority
             />
           </motion.div>
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0F] via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg)] via-transparent to-transparent" />
         </div>
 
         <div className="grid md:grid-cols-12 gap-12 md:gap-20">
           <div className="md:col-span-4">
             <div className="md:sticky md:top-28">
-              <div className="text-[12px] tracking-[0.2em] uppercase text-[#9CA3AF]">
+              <div className="text-[12px] tracking-[0.2em] uppercase text-[var(--text-muted)]">
                 How it unfolded
               </div>
-              <p className="mt-4 text-[18px] leading-[1.55] text-[#EDEDED] font-medium">
+              <p className="mt-4 text-[18px] leading-[1.55] text-[var(--text)] font-medium">
                 Problem → Process → Solution. A calm sequence, not a deliverable checklist.
               </p>
               <ul className="mt-8 space-y-3">
                 {caseStudy.sections.map((s) => (
                   <li
                     key={s.kind}
-                    className="flex items-center gap-3 text-[14px] text-[#9CA3AF]"
+                    className="flex items-center gap-3 text-[14px] text-[var(--text-muted)]"
                   >
                     <span
                       className="w-1.5 h-1.5 rounded-full"
@@ -100,7 +100,7 @@ const CaseStudy = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.6, delay: i * 0.05 }}
-                className="relative pl-6 border-l border-white/[0.08]"
+                className="relative pl-6 border-l border-[var(--border)]"
               >
                 <span
                   className="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full"
@@ -112,22 +112,22 @@ const CaseStudy = () => {
                 >
                   {s.title}
                 </div>
-                <h3 className="text-[26px] md:text-[32px] leading-[1.2] font-semibold tracking-[-0.02em] text-[#EDEDED]">
+                <h3 className="text-[26px] md:text-[32px] leading-[1.2] font-semibold tracking-[-0.02em] text-[var(--text)]">
                   {s.heading}
                 </h3>
-                <p className="mt-4 text-[16px] leading-[1.7] text-[#9CA3AF] max-w-xl">
+                <p className="mt-4 text-[16px] leading-[1.7] text-[var(--text-muted)] max-w-xl">
                   {s.body}
                 </p>
                 <div className="mt-6 flex flex-wrap gap-3">
                   {s.stats.map((st) => (
                     <div
                       key={st.label}
-                      className="px-4 py-3 rounded-xl border border-white/[0.07] bg-white/[0.02]"
+                      className="px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--border)]"
                     >
-                      <div className="text-[20px] font-semibold tracking-tight text-[#EDEDED]">
+                      <div className="text-[20px] font-semibold tracking-tight text-[var(--text)]">
                         {st.value}
                       </div>
-                      <div className="text-[11px] tracking-[0.15em] uppercase text-[#9CA3AF] mt-1">
+                      <div className="text-[11px] tracking-[0.15em] uppercase text-[var(--text-muted)] mt-1">
                         {st.label}
                       </div>
                     </div>
@@ -148,21 +148,21 @@ const CaseStudy = () => {
           >
             <div className="flex items-end justify-between gap-6 mb-8">
               <div>
-                <div className="flex items-center gap-2 text-[12px] tracking-[0.2em] uppercase text-[#9CA3AF]">
-                  <span className="w-8 h-px bg-white/20" />
+                <div className="flex items-center gap-2 text-[12px] tracking-[0.2em] uppercase text-[var(--text-muted)]">
+                  <span className="w-8 h-px bg-[var(--border-hover)]" />
                   Final Designs
                 </div>
-                <h3 className="mt-4 text-[24px] md:text-[32px] leading-[1.15] font-semibold tracking-[-0.025em] text-[#EDEDED] max-w-2xl">
+                <h3 className="mt-4 text-[24px] md:text-[32px] leading-[1.15] font-semibold tracking-[-0.025em] text-[var(--text)] max-w-2xl">
                   Every screen — end to end.
                 </h3>
               </div>
-              <div className="hidden md:block text-right text-[12px] tracking-[0.2em] uppercase text-[#9CA3AF]">
+              <div className="hidden md:block text-right text-[12px] tracking-[0.2em] uppercase text-[var(--text-muted)]">
                 Mobile · Nova Trade
               </div>
             </div>
 
             <div
-              className="relative overflow-hidden rounded-[24px] border border-white/[0.06] bg-[#0E0E14]"
+              className="relative overflow-hidden rounded-[24px] border border-[var(--border)] bg-[var(--bg-elevated)]"
               style={{
                 boxShadow:
                   '0 1px 0 rgba(255,255,255,0.04) inset, 0 40px 80px -40px rgba(0,0,0,0.6)',
@@ -186,8 +186,8 @@ const CaseStudy = () => {
 
 const Meta = ({ label, value }) => (
   <div>
-    <div className="text-[11px] tracking-[0.2em] uppercase text-[#9CA3AF]">{label}</div>
-    <div className="mt-2 text-[14px] text-[#EDEDED] font-medium">{value}</div>
+    <div className="text-[11px] tracking-[0.2em] uppercase text-[var(--text-muted)]">{label}</div>
+    <div className="mt-2 text-[14px] text-[var(--text)] font-medium">{value}</div>
   </div>
 );
 

@@ -7,10 +7,12 @@ import Skills from '@/components/Skills';
 import Experience from '@/components/Experience';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
+import { CursorSpotlight } from '@/components/CursorSpotlight';
 
 export default function Home() {
   return (
     <main className="App relative z-[2]">
+      <CursorSpotlight />
       <Navigation />
       <Hero />
       <About />

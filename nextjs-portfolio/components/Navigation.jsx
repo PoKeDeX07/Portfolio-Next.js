@@ -4,6 +4,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { navLinks, profile } from '@/data/portfolio';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 const Navigation = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -72,7 +73,7 @@ const Navigation = () => {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'backdrop-blur-xl bg-[#0B0B0F]/70 border-b border-white/[0.06]'
+          ? 'backdrop-blur-xl bg-[var(--nav-bg)] border-b border-[var(--border)]'
           : 'bg-transparent'
       }`}
     >
@@ -87,7 +88,7 @@ const Navigation = () => {
             alt="Monogram" 
             className="w-6 h-6 object-contain"
           />
-          <span className="text-[15px] font-semibold tracking-tight text-[#EDEDED] whitespace-nowrap">
+          <span className="text-[15px] font-semibold tracking-tight text-[var(--text)] whitespace-nowrap">
             {profile.name}
           </span>
         </a>
@@ -102,8 +103,8 @@ const Navigation = () => {
                   onClick={(e) => handleNav(e, link.href)}
                   className={`px-4 py-2 text-[14px] transition-all duration-300 rounded-full ${
                     isActive
-                      ? 'text-[#EDEDED] bg-white/[0.05]'
-                      : 'text-[#9CA3AF] hover:text-[#EDEDED]'
+                      ? 'text-[var(--text)] bg-[var(--border)]'
+                      : 'text-[var(--text-muted)] hover:text-[var(--text)]'
                   }`}
                 >
                   {link.label}
@@ -113,25 +114,31 @@ const Navigation = () => {
           })}
         </ul>
 
-        <a
-          href="#contact"
-          onClick={(e) => handleNav(e, '#contact')}
-          className={`hidden md:inline-flex items-center gap-2 px-5 py-2.5 rounded-full border transition-all duration-300 text-[14px] font-medium ${
-            activeSection === 'contact'
-              ? 'bg-white text-[#0B0B0F] border-white'
-              : 'bg-white/[0.04] border-white/[0.1] text-[#EDEDED] hover:bg-white/[0.08] hover:border-white/20'
-          }`}
-        >
-          Let’s talk
-        </a>
+<div className="hidden md:flex items-center gap-3">
+          <ThemeToggle />
+          <a
+            href="#contact"
+            onClick={(e) => handleNav(e, '#contact')}
+            className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full border transition-all duration-300 text-[14px] font-medium ${
+              activeSection === 'contact'
+                ? 'bg-[var(--text)] text-[var(--bg)] border-[var(--text)]'
+                : 'bg-[var(--border)] border-[var(--border)] text-[var(--text)] hover:bg-[var(--border-hover)] hover:border-[var(--border-hover)]'
+            }`}
+          >
+            Let&apos;s talk
+          </a>
+        </div>
 
-        <button
-          className="md:hidden w-10 h-10 flex items-center justify-center rounded-full bg-white/[0.04] border border-white/[0.08] text-[#EDEDED]"
-          onClick={() => setOpen((v) => !v)}
-          aria-label="Menu"
-        >
-          {open ? <X size={18} /> : <Menu size={18} />}
-        </button>
+        <div className="flex md:hidden items-center gap-2">
+          <ThemeToggle />
+          <button
+            className="w-10 h-10 flex items-center justify-center rounded-full bg-[var(--border)] border border-[var(--border)] text-[var(--text)]"
+            onClick={() => setOpen((v) => !v)}
+            aria-label="Menu"
+          >
+            {open ? <X size={18} /> : <Menu size={18} />}
+          </button>
+        </div>
       </nav>
 
       <AnimatePresence>
@@ -141,7 +148,7 @@ const Navigation = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden border-t border-white/[0.06] bg-[#0B0B0F]/95 backdrop-blur-xl"
+            className="md:hidden border-t border-[var(--border)] bg-[var(--bg)]/95 backdrop-blur-xl"
           >
             <ul className="section-container py-4 flex flex-col gap-1">
               {navLinks.map((link) => {
@@ -153,8 +160,8 @@ const Navigation = () => {
                       onClick={(e) => handleNav(e, link.href)}
                       className={`block px-3 py-3 text-[15px] rounded-xl transition-colors ${
                         isActive
-                          ? 'text-[#EDEDED] bg-white/[0.05]'
-                          : 'text-[#9CA3AF] hover:text-[#EDEDED]'
+                          ? 'text-[var(--text)] bg-[var(--border)]'
+                          : 'text-[var(--text-muted)] hover:text-[var(--text)]'
                       }`}
                     >
                       {link.label}
