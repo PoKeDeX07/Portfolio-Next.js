@@ -49,12 +49,6 @@ const ProjectCard = ({ project, index }) => {
                     sizes="(max-width: 768px) 100vw, 60vw"
                     className="object-contain transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
                   />
-                  <div
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                    style={{
-                      background: `radial-gradient(circle at 50% 90%, ${project.accent}22, transparent 60%)`,
-                    }}
-                  />
                 </div>
               </div>
 
