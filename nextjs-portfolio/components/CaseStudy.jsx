@@ -63,7 +63,6 @@ const CaseStudy = () => {
               priority
             />
           </motion.div>
-          <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg)] via-transparent to-transparent" />
         </div>
 
         <div className="grid md:grid-cols-12 gap-12 md:gap-20">
