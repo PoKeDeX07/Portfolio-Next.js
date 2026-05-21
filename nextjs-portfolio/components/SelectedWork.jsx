@@ -4,11 +4,27 @@ import React from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
+import Link from 'next/link';
 import { projects } from '@/data/portfolio';
 
 const ProjectCard = ({ project, index }) => {
-  const Wrapper = ({ children }) =>
-    project.link ? (
+  const isInternal = project.link?.startsWith('/');
+  
+  const Wrapper = ({ children }) => {
+    if (!project.link) return <>{children}</>;
+    
+    if (isInternal) {
+      return (
+        <Link
+          href={project.link}
+          className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30 rounded-[24px]"
+        >
+          {children}
+        </Link>
+      );
+    }
+
+    return (
       <a
         href={project.link}
         target="_blank"
@@ -18,9 +34,8 @@ const ProjectCard = ({ project, index }) => {
       >
         {children}
       </a>
-    ) : (
-      <>{children}</>
     );
+  };
 
   return (
     <Wrapper>
