@@ -52,6 +52,18 @@ export const tools = [
 
 export const projects = [
   {
+    id: 'nova-trade',
+    title: 'Nova Trade — Crypto Trading App',
+    tags: ['Mobile', 'Fintech', 'Crypto'],
+    description:
+      'A beginner-friendly crypto trading platform — designed to make digital asset investing simple, safe, and educational.',
+    image: 'https://customer-assets.emergentagent.com/job_aniket-design/artifacts/07ocntqc_Nova%20Trade.jpg',
+    year: '2024',
+    role: 'UI/UX Designer',
+    accent: '#00D4FF',
+    link: '/projects/nova-trade',
+  },
+  {
     id: 'fintrust',
     title: 'FinTrust — Finance AI Chat Bot',
     tags: ['Mobile', 'Fintech', 'Conversational UI'],
@@ -186,7 +198,6 @@ export const experience = [
 export const navLinks = [
   { label: 'About', href: '#about' },
   { label: 'Work', href: '#work' },
-  { label: 'Case Study', href: '#case-study' },
   { label: 'Experience', href: '#experience' },
   { label: 'Contact', href: '#contact' },
 ];
