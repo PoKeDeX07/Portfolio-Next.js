@@ -101,7 +101,10 @@ export default function NovaTradeCaseStudy() {
           transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
           className="relative z-10 mt-20 w-full max-w-4xl mx-auto flex justify-center"
         >
-          <div className="relative w-[280px] md:w-[320px] aspect-[9/19] rounded-[40px] border-[8px] border-[var(--border-dark)] overflow-hidden shadow-2xl shadow-[#4E7BFF]/20 bg-black">
+          <div className="absolute inset-0 flex justify-center pointer-events-none">
+            <div className="w-[280px] md:w-[320px] aspect-[9/19] rounded-[40px] bg-[#4E7BFF]/30 blur-[80px] opacity-60" />
+          </div>
+          <div className="relative w-[280px] md:w-[320px] aspect-[9/19] rounded-[40px] border-[8px] border-[#2A2D3A] overflow-hidden shadow-2xl shadow-[#4E7BFF]/20 bg-black">
             <Image
               src="/projects/nova-trade/dashboard-invest.png"
               alt="Nova Trade Hero App Screen"
@@ -230,14 +233,14 @@ export default function NovaTradeCaseStudy() {
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             {[
+              { src: "/projects/nova-trade/splash-screen.png", label: "Splash Screen" },
+              { src: "/projects/nova-trade/welcome-back.png", label: "Login Screen" },
               { src: "/projects/nova-trade/dashboard-invest.png", label: "Invest Dashboard" },
               { src: "/projects/nova-trade/dashboard-trade.png", label: "Trade Dashboard" },
-              { src: "/projects/nova-trade/portfolio-overview.png", label: "Portfolio" },
+              { src: "/projects/nova-trade/portfolio-overview.png", label: "Portfolio Screen" },
               { src: "/projects/nova-trade/trade-screen.png", label: "Trade Screen" },
-              { src: "/projects/nova-trade/allocation-chart.png", label: "Allocation" },
-              { src: "/projects/nova-trade/pnl-graph.png", label: "PNL Graph" },
-              { src: "/projects/nova-trade/welcome-back.png", label: "Login" },
-              { src: "/projects/nova-trade/splash-screen.png", label: "Splash" },
+              { src: "/projects/nova-trade/allocation-chart.png", label: "Allocation Screen" },
+              { src: "/projects/nova-trade/pnl-graph.png", label: "P&L Graph" },
             ].map((screen, i) => (
               <motion.div 
                 key={i}
@@ -268,7 +271,7 @@ export default function NovaTradeCaseStudy() {
       <Section className="bg-[var(--bg-secondary)]">
         <div className="max-w-5xl mx-auto text-center">
           <h2 className="text-sm uppercase tracking-widest text-[var(--text-muted)] mb-10">System Architecture Overview</h2>
-          <div className="relative w-full rounded-[24px] md:rounded-[32px] overflow-hidden border border-[var(--border)] bg-[var(--bg)] shadow-2xl">
+          <div className="relative w-full rounded-[24px] md:rounded-[32px] overflow-hidden border-[6px] border-[#2A2D3A] bg-[var(--bg)] shadow-2xl">
              <Image
               src="/projects/nova-trade/card-cover.jpg"
               alt="Nova Trade Full Ecosystem Overview"
