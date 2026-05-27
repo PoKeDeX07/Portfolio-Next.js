@@ -1,429 +1,305 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { useRouter } from 'next/navigation';
-import Image from 'next/image';
-import { motion } from 'framer-motion';
-import { ChevronLeft } from 'lucide-react';
-import Link from 'next/link';
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowLeft, ExternalLink, ShieldCheck, Zap, Palette, Type } from "lucide-react";
+import { Sora, Inter } from "next/font/google";
 
-const fadeInUp = {
-  initial: { opacity: 0, y: 32 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, amount: 0.3 },
-  transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+const sora = Sora({ subsets: ["latin"], weight: ["400", "600", "700"] });
+const inter = Inter({ subsets: ["latin"], weight: ["400", "500"] });
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
 };
 
-const staggerContainer = {
-  initial: { opacity: 0 },
-  whileInView: { opacity: 1 },
-  viewport: { once: true, amount: 0.2 },
-  transition: { staggerChildren: 0.08, delayChildren: 0.1 },
-};
-
-export default function NovaTradeProject() {
-  const router = useRouter();
-
+function Section({ children, className = "", id = "" }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
   return (
-    <main className="relative z-[2] overflow-hidden">
-      {/* Header with back button */}
-      <header className="fixed top-0 left-0 right-0 z-40 backdrop-blur-xl bg-[var(--nav-bg)] border-b border-[var(--border)]">
-        <div className="section-container flex items-center justify-between h-16 md:h-20">
-          <button
-            onClick={() => router.back()}
-            className="flex items-center gap-2 px-3 py-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--text)] transition-colors"
-            aria-label="Go back"
-          >
-            <ChevronLeft size={20} />
-            <span className="text-sm font-medium">Back</span>
-          </button>
-          <div className="text-[12px] tracking-[0.2em] uppercase text-[var(--text-muted)]">
-            Case Study
-          </div>
-        </div>
-      </header>
+    <motion.section
+      id={id}
+      ref={ref}
+      initial="hidden"
+      animate={isInView ? "visible" : "hidden"}
+      variants={fadeUp}
+      className={`w-full px-6 md:px-12 lg:px-24 py-20 ${className}`}
+    >
+      {children}
+    </motion.section>
+  );
+}
+
+function InfoBlock({ label, value }) {
+  return (
+    <div className="flex flex-col gap-1.5 items-center text-center">
+      <span className="text-[11px] uppercase tracking-[0.2em] text-[var(--text-muted)]">{label}</span>
+      <span className="text-[15px] font-medium text-[var(--text)]">{value}</span>
+    </div>
+  );
+}
+
+export default function NovaTradeCaseStudy() {
+  return (
+    <main className={`min-h-screen bg-[var(--bg)] text-[var(--text)] antialiased selection:bg-[#4E7BFF]/30 overflow-x-hidden ${inter.className}`}>
+      {/* Navigation */}
+      <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-6 flex justify-between items-center pointer-events-none">
+        <Link 
+          href="/" 
+          className="pointer-events-auto flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--nav-bg)]/80 border border-[var(--border)] backdrop-blur-xl text-[13px] font-medium text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--border)] transition-all duration-300 shadow-xl shadow-black/20"
+        >
+          <ArrowLeft size={16} />
+          Back home
+        </Link>
+      </nav>
 
       {/* Hero Section */}
-      <section className="relative pt-32 md:pt-40 pb-16 md:pb-24">
-        <div className="section-container">
-          <motion.div {...fadeInUp} className="mb-8">
-            <div className="flex items-center gap-2 text-[12px] tracking-[0.2em] uppercase text-[#00D4FF]">
-              <span className="w-8 h-px bg-[#00D4FF]" />
-              Selected Case Study
-            </div>
-          </motion.div>
-
-          <motion.div {...fadeInUp}>
-            <h1 className="text-[48px] sm:text-[56px] md:text-[72px] leading-[1.05] font-bold tracking-[-0.03em] text-[var(--text)] mb-4">
-              Nova Trade
-            </h1>
-            <p className="text-[18px] md:text-[20px] leading-[1.5] text-[var(--text-muted)] max-w-2xl">
-              A beginner-friendly crypto trading platform — designed to make digital asset investing simple, safe, and educational.
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 32 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="grid md:grid-cols-3 gap-8 md:gap-12 mt-12 md:mt-16 pt-12 md:pt-16 border-t border-[var(--border)]"
-          >
-            <div>
-              <div className="text-[12px] tracking-[0.2em] uppercase text-[var(--text-muted)] mb-2">Project</div>
-              <p className="text-[16px] font-medium text-[var(--text)]">Crypto Trading App</p>
-            </div>
-            <div>
-              <div className="text-[12px] tracking-[0.2em] uppercase text-[var(--text-muted)] mb-2">Duration</div>
-              <p className="text-[16px] font-medium text-[var(--text)]">7–10 Days</p>
-            </div>
-            <div>
-              <div className="text-[12px] tracking-[0.2em] uppercase text-[var(--text-muted)] mb-2">Role</div>
-              <p className="text-[16px] font-medium text-[var(--text)]">UI/UX Designer</p>
-            </div>
-          </motion.div>
+      <header className="relative w-full min-h-[95vh] flex flex-col items-center justify-center px-6 md:px-12 lg:px-24 pt-32 pb-20 overflow-hidden text-center">
+        {/* Abstract Background */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute -top-[20%] left-[15%] w-[70vw] h-[70vw] rounded-full bg-[#4E7BFF]/10 blur-[120px] mix-blend-screen" />
+          <div className="absolute top-[40%] right-[15%] w-[60vw] h-[60vw] rounded-full bg-[#7C5CFF]/10 blur-[120px] mix-blend-screen" />
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjAwIDIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZmlsdGVyIGlkPSJub2lzZUZpbHRlciI+PGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuODUiIG51bU9jdGF2ZXM9IjMiIHN0aXRjaFRpbGVzPSJzdGl0Y2giLz48L2ZpbHRlcj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWx0ZXI9InVybCgibm9pc2VGaWx0ZXIpIi8+PC9zdmc+')] opacity-[0.03] mix-blend-overlay" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[var(--bg)]/50 to-[var(--bg)]" />
         </div>
-      </section>
+        
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="relative z-10 max-w-4xl mx-auto flex flex-col items-center"
+        >
+          <div className="flex flex-wrap items-center justify-center gap-3 mb-8">
+            <span className="px-3 py-1.5 rounded-full bg-[#4E7BFF]/10 border border-[#4E7BFF]/20 text-[#4E7BFF] text-[11px] font-semibold tracking-widest uppercase">
+              Case Study
+            </span>
+            <span className="text-[11px] text-[var(--text-muted)] tracking-[0.15em] uppercase font-medium">Fintech / Mobile App</span>
+          </div>
+          
+          <h1 className={`text-5xl md:text-7xl lg:text-[90px] font-bold tracking-tight mb-8 leading-[1] ${sora.className}`}>
+            Nova Trade
+          </h1>
+          
+          <p className="text-lg md:text-xl text-[var(--text-muted)] max-w-2xl leading-relaxed mb-12 font-light">
+            A beginner-friendly crypto trading platform — designed to make digital asset investing simple, safe, and educational.
+          </p>
 
-      {/* Hero Image */}
-      <motion.section
-        initial={{ opacity: 0, y: 48 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.1 }}
-        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        className="relative h-[400px] md:h-[600px] mb-24 md:mb-32 px-4 md:px-0"
-      >
-        <Image
-          src="/projects/nova-trade/card-cover.jpg"
-          alt="Nova Trade — Hero Image"
-          fill
-          className="object-cover rounded-2xl md:rounded-3xl"
-          priority
-        />
-      </motion.section>
+          <div className="flex flex-wrap justify-center gap-10 md:gap-16 pt-10 border-t border-[var(--border)] w-full">
+            <InfoBlock label="Role" value="UI/UX Designer" />
+            <InfoBlock label="Timeline" value="3 Months" />
+            <InfoBlock label="Platforms" value="iOS & Android" />
+            <InfoBlock label="Focus" value="Onboarding & Simplicity" />
+          </div>
+        </motion.div>
 
-      {/* Problem Section */}
-      <section className="relative py-20 md:py-32">
-        <div className="section-container">
-          <motion.div {...fadeInUp}>
-            <div className="flex items-center gap-2 text-[12px] tracking-[0.2em] uppercase text-[#00D4FF] mb-6">
-              <span className="w-8 h-px bg-[#00D4FF]" />
-              THE CHALLENGE
-            </div>
-            <h2 className="text-[40px] md:text-[56px] leading-[1.2] font-bold tracking-[-0.02em] text-[var(--text)] mb-8">
-              Crypto is locked behind complexity.
-            </h2>
-          </motion.div>
+        {/* Hero Mockup */}
+        <motion.div
+          initial={{ opacity: 0, y: 60 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          className="relative z-10 mt-20 w-full max-w-4xl mx-auto flex justify-center"
+        >
+          <div className="relative w-[280px] md:w-[320px] aspect-[9/19] rounded-[40px] border-[8px] border-[var(--border-dark)] overflow-hidden shadow-2xl shadow-[#4E7BFF]/20 bg-black">
+            <Image
+              src="/projects/nova-trade/dashboard-invest.png"
+              alt="Nova Trade Hero App Screen"
+              fill
+              className="object-cover"
+              priority
+            />
+          </div>
+        </motion.div>
+      </header>
 
-          <motion.p
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="text-[16px] md:text-[18px] leading-[1.7] text-[var(--text-muted)] max-w-3xl mb-12"
-          >
-            Most crypto platforms today are overloaded with complex charts, jargon, and advanced tools. While this caters to professionals, it alienates beginners — who feel overwhelmed placing their first trade, struggle to understand risks due to lack of context, and abandon apps quickly due to poor onboarding. The result: high drop-off, abandoned accounts, and a lasting lack of trust.
-          </motion.p>
-
-          <motion.div
-            variants={staggerContainer}
-            initial="initial"
-            whileInView="whileInView"
-            viewport={{ once: true, amount: 0.2 }}
-            className="grid md:grid-cols-3 gap-6 md:gap-8"
-          >
+      {/* The Challenge */}
+      <Section className="border-t border-[var(--border)]">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="flex items-center justify-center gap-2 text-[12px] tracking-[0.2em] uppercase text-[var(--text-muted)] mb-6">
+            <span className="w-8 h-px bg-[var(--border)]" />
+            The Challenge
+            <span className="w-8 h-px bg-[var(--border)]" />
+          </div>
+          <h2 className={`text-[32px] md:text-[40px] leading-[1.2] font-semibold tracking-tight text-[var(--text)] mb-8 ${sora.className}`}>
+            Crypto is locked behind complexity.
+          </h2>
+          <p className="text-[17px] md:text-[19px] leading-[1.7] text-[var(--text-muted)] max-w-3xl mx-auto">
+            Most crypto platforms today are overloaded with complex charts, jargon, and advanced tools. While this caters to professionals, it alienates beginners who feel overwhelmed placing their first trade, struggle to understand risks, and abandon apps quickly during onboarding.
+          </p>
+          
+          <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 gap-6 text-left">
             {[
-              { label: 'Core Beginner Pain Points', value: '3' },
-              { label: 'First-Trade Drop-Off Rate', value: 'High' },
-              { label: 'Onboarding Complexity', value: 'Extreme' },
-            ].map((stat, i) => (
-              <motion.div
-                key={i}
-                variants={fadeInUp}
-                className="p-6 rounded-2xl border border-[var(--border)] bg-[var(--card-bg)]"
-              >
-                <div className="text-[14px] tracking-[0.1em] uppercase text-[var(--text-muted)] mb-2">
-                  {stat.label}
+              { 
+                icon: ShieldCheck, 
+                title: "Risk Education", 
+                desc: "Built-in risk meters to help users understand their exposure before placing any trade." 
+              },
+              { 
+                icon: Zap, 
+                title: "Guided Onboarding", 
+                desc: "A simplified, step-by-step approach for KYC and wallet setup to reduce drop-offs." 
+              }
+            ].map((item, i) => (
+              <div key={i} className="p-8 rounded-[24px] bg-[var(--border)]/30 border border-[var(--border)] backdrop-blur-sm group hover:bg-[var(--border)] hover:border-[var(--border-hover)] transition-all duration-300">
+                <div className="w-12 h-12 rounded-full bg-[#4E7BFF]/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <item.icon className="text-[#4E7BFF]" size={24} />
                 </div>
-                <div className="text-[32px] font-bold text-[var(--text)]">{stat.value}</div>
-              </motion.div>
+                <h3 className={`text-[18px] font-semibold text-[var(--text)] mb-3 ${sora.className}`}>{item.title}</h3>
+                <p className="text-[15px] text-[var(--text-muted)] leading-relaxed">{item.desc}</p>
+              </div>
             ))}
-          </motion.div>
+          </div>
         </div>
-      </section>
+      </Section>
 
-      {/* Solution Section */}
-      <section className="relative py-20 md:py-32 bg-[var(--bg-secondary)]">
-        <div className="section-container">
-          <motion.div {...fadeInUp}>
-            <div className="flex items-center gap-2 text-[12px] tracking-[0.2em] uppercase text-[#00D4FF] mb-6">
-              <span className="w-8 h-px bg-[#00D4FF]" />
-              THE SOLUTION
-            </div>
-            <h2 className="text-[40px] md:text-[56px] leading-[1.2] font-bold tracking-[-0.02em] text-[var(--text)] mb-8">
-              Simple onboarding, calm trading, built-in learning.
-            </h2>
-          </motion.div>
-
-          <motion.p
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="text-[16px] md:text-[18px] leading-[1.7] text-[var(--text-muted)] max-w-3xl mb-12"
-          >
-            A clean glassmorphism UI in dark mode with neon blue accents. Simplified charts and a Low / Medium / High risk meter guide every trade. A guided onboarding flow meets users where they are, while a built-in Learn tab with a glossary and gamified modules builds confidence before they commit. Density is earned, not assumed.
-          </motion.p>
-
-          <motion.div
-            variants={staggerContainer}
-            initial="initial"
-            whileInView="whileInView"
-            viewport={{ once: true, amount: 0.2 }}
-            className="grid md:grid-cols-2 gap-6 md:gap-8"
-          >
-            {[
-              { label: 'Risk Levels (L / M / H)', value: '3 Tiers' },
-              { label: 'Built-in Learn Tab', value: 'Gamified' },
-              { label: 'Onboarding Steps', value: '5 Screens' },
-              { label: 'Primary Color', value: '#00D4FF' },
-            ].map((stat, i) => (
-              <motion.div
-                key={i}
-                variants={fadeInUp}
-                className="p-6 rounded-2xl border border-[var(--border)] bg-[var(--card-bg)]"
-              >
-                <div className="text-[14px] tracking-[0.1em] uppercase text-[var(--text-muted)] mb-2">
-                  {stat.label}
-                </div>
-                <div className="text-[24px] font-bold text-[var(--text)]">{stat.value}</div>
-              </motion.div>
-            ))}
-          </motion.div>
+      {/* Visual Identity */}
+      <Section className="bg-[var(--bg-secondary)]">
+        <div className="flex flex-col items-center text-center mb-16">
+          <div className="flex items-center gap-2 text-[12px] tracking-[0.2em] uppercase text-[var(--text-muted)]">
+            <span className="w-8 h-px bg-[var(--border)]" />
+            Visual Identity
+            <span className="w-8 h-px bg-[var(--border)]" />
+          </div>
+          <h2 className={`mt-6 text-[36px] md:text-[48px] font-bold tracking-tight text-[var(--text)] ${sora.className}`}>
+            Dark. Calm. Focused.
+          </h2>
         </div>
-      </section>
 
-      {/* Design System Section */}
-      <section className="relative py-20 md:py-32">
-        <div className="section-container">
-          <motion.div {...fadeInUp} className="mb-12">
-            <div className="flex items-center gap-2 text-[12px] tracking-[0.2em] uppercase text-[#00D4FF] mb-6">
-              <span className="w-8 h-px bg-[#00D4FF]" />
-              DESIGN SYSTEM
+        <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
+          {/* Colors */}
+          <div className="p-8 rounded-[24px] bg-[var(--bg)] border border-[var(--border)]">
+            <div className="flex items-center gap-3 mb-8">
+              <Palette className="text-[#4E7BFF]" size={20} />
+              <h3 className={`text-[16px] font-semibold uppercase tracking-widest text-[var(--text)] ${sora.className}`}>Colors</h3>
             </div>
-            <h2 className="text-[40px] md:text-[56px] leading-[1.2] font-bold tracking-[-0.02em] text-[var(--text)]">
-              Dark. Calm. Focused.
-            </h2>
-          </motion.div>
-
-          <motion.div
-            variants={staggerContainer}
-            initial="initial"
-            whileInView="whileInView"
-            viewport={{ once: true, amount: 0.2 }}
-            className="grid md:grid-cols-2 gap-12 md:gap-16"
-          >
-            {/* Colors */}
-            <motion.div variants={fadeInUp}>
-              <h3 className="text-[18px] font-semibold text-[var(--text)] uppercase tracking-[0.1em] mb-8">
-                Colors
-              </h3>
-              <div className="space-y-4">
-                {[
-                  { name: 'Primary Navy Blue', hex: '#0B0B0F', code: '#0B0B0F' },
-                  { name: 'Accent Cyan', hex: '#00D4FF', code: '#00D4FF' },
-                  { name: 'Success Green', hex: '#10B981', code: '#10B981' },
-                  { name: 'Neutral Gray', hex: '#6B7280', code: '#6B7280' },
-                ].map((color, i) => (
-                  <div key={i} className="flex items-center gap-4">
-                    <div
-                      className="w-12 h-12 rounded-lg border border-[var(--border)]"
-                      style={{ backgroundColor: color.hex }}
-                    />
-                    <div>
-                      <div className="text-[14px] font-medium text-[var(--text)]">{color.name}</div>
-                      <div className="text-[12px] text-[var(--text-muted)]">{color.code}</div>
-                    </div>
+            <div className="space-y-4">
+              {[
+                { name: "Primary Navy Blue", hex: "#1A2847" },
+                { name: "Accent Blue", hex: "#4E7BFF" },
+                { name: "Dark Gray", hex: "#1E1F24" },
+                { name: "Gray", hex: "#A0A5B9" },
+              ].map((c) => (
+                <div key={c.name} className="flex items-center justify-between p-4 rounded-xl bg-[var(--border)]/50 border border-[var(--border)]">
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-lg shadow-inner border border-[var(--border)]" style={{ backgroundColor: c.hex }} />
+                    <span className="text-[15px] font-medium text-[var(--text)]">{c.name}</span>
                   </div>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Typography */}
-            <motion.div variants={fadeInUp}>
-              <h3 className="text-[18px] font-semibold text-[var(--text)] uppercase tracking-[0.1em] mb-8">
-                Typography
-              </h3>
-              <div className="space-y-6">
-                <div>
-                  <div className="text-[12px] uppercase tracking-[0.1em] text-[var(--text-muted)] mb-2">Display</div>
-                  <div className="text-[32px] font-bold text-[var(--text)]">Sora</div>
-                  <div className="text-[13px] text-[var(--text-muted)]">Bold Headlines & Titles</div>
+                  <span className="text-[13px] font-mono text-[var(--text-muted)]">{c.hex}</span>
                 </div>
-                <div>
-                  <div className="text-[12px] uppercase tracking-[0.1em] text-[var(--text-muted)] mb-2">Body</div>
-                  <div className="text-[16px] font-medium text-[var(--text)]">Inter</div>
-                  <div className="text-[13px] text-[var(--text-muted)]">Clean, Legible Text</div>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Case Studies / Screenshots */}
-      <section className="relative py-20 md:py-32">
-        <div className="section-container">
-          <motion.div {...fadeInUp} className="mb-12">
-            <div className="flex items-center gap-2 text-[12px] tracking-[0.2em] uppercase text-[#00D4FF] mb-6">
-              <span className="w-8 h-px bg-[#00D4FF]" />
-              CASE STUDIES
+              ))}
             </div>
-            <h2 className="text-[40px] md:text-[56px] leading-[1.2] font-bold tracking-[-0.02em] text-[var(--text)]">
-              Key User Journeys
-            </h2>
-          </motion.div>
+          </div>
 
-          <motion.div
-            variants={staggerContainer}
-            initial="initial"
-            whileInView="whileInView"
-            viewport={{ once: true, amount: 0.15 }}
-            className="grid md:grid-cols-2 gap-8"
-          >
-            {/* Trading Journey */}
-            <motion.div variants={fadeInUp} className="space-y-4">
-              <div className="relative h-[500px] rounded-2xl overflow-hidden border border-[var(--border)] bg-[var(--card-bg)]">
-                <Image
-                  src="/projects/nova-trade/trade-screen.png"
-                  alt="Trading Interface"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <h3 className="text-[20px] font-semibold text-[var(--text)]">Trading Interface</h3>
-              <p className="text-[15px] text-[var(--text-muted)] leading-[1.6]">
-                Simplified trading screen with risk-level indicators, real-time charts, and one-tap actions to Receive, Send, or Swap.
+          {/* Typography */}
+          <div className="p-8 rounded-[24px] bg-[var(--bg)] border border-[var(--border)] flex flex-col justify-center">
+            <div className="flex items-center gap-3 mb-8">
+              <Type className="text-[#7C5CFF]" size={20} />
+              <h3 className={`text-[16px] font-semibold uppercase tracking-widest text-[var(--text)] ${sora.className}`}>Typography</h3>
+            </div>
+            
+            <div className="mb-8">
+              <span className="text-[11px] text-[var(--text-muted)] uppercase tracking-widest mb-2 block">Headings</span>
+              <p className={`text-[36px] font-bold leading-tight tracking-tight text-[var(--text)] ${sora.className}`}>
+                Sora
               </p>
-            </motion.div>
-
-            {/* Portfolio Dashboard */}
-            <motion.div variants={fadeInUp} className="space-y-4">
-              <div className="relative h-[500px] rounded-2xl overflow-hidden border border-[var(--border)] bg-[var(--card-bg)]">
-                <Image
-                  src="/projects/nova-trade/dashboard-trade.png"
-                  alt="Portfolio Dashboard"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <h3 className="text-[20px] font-semibold text-[var(--text)]">Portfolio Dashboard</h3>
-              <p className="text-[15px] text-[var(--text-muted)] leading-[1.6]">
-                At-a-glance portfolio value, open positions, and quick action buttons for Fund, Receive, Send, or Swap.
+            </div>
+            
+            <div>
+              <span className="text-[11px] text-[var(--text-muted)] uppercase tracking-widest mb-2 block">Body & Data</span>
+              <p className={`text-[28px] font-medium leading-tight text-[var(--text)] ${inter.className}`}>
+                Inter
               </p>
-            </motion.div>
-          </motion.div>
-
-          <motion.div
-            variants={staggerContainer}
-            initial="initial"
-            whileInView="whileInView"
-            viewport={{ once: true, amount: 0.15 }}
-            className="grid md:grid-cols-2 gap-8 mt-8"
-          >
-            {/* PNL Chart */}
-            <motion.div variants={fadeInUp} className="space-y-4">
-              <div className="relative h-[500px] rounded-2xl overflow-hidden border border-[var(--border)] bg-[var(--card-bg)]">
-                <Image
-                  src="/projects/nova-trade/pnl-graph.png"
-                  alt="PNL Chart"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <h3 className="text-[20px] font-semibold text-[var(--text)]">Performance Analytics</h3>
-              <p className="text-[15px] text-[var(--text-muted)] leading-[1.6]">
-                Portfolio PNL tracking with interactive time-period selector and detailed allocation breakdown.
-              </p>
-            </motion.div>
-
-            {/* Allocation */}
-            <motion.div variants={fadeInUp} className="space-y-4">
-              <div className="relative h-[500px] rounded-2xl overflow-hidden border border-[var(--border)] bg-[var(--card-bg)]">
-                <Image
-                  src="/projects/nova-trade/allocation-chart.png"
-                  alt="Allocation Chart"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <h3 className="text-[20px] font-semibold text-[var(--text)]">Asset Allocation</h3>
-              <p className="text-[15px] text-[var(--text-muted)] leading-[1.6]">
-                Visual breakdown of holdings across DOGE, SOL, ETH, and other assets with real-time percentages.
-              </p>
-            </motion.div>
-          </motion.div>
+            </div>
+            
+            <p className="mt-8 text-[14px] leading-relaxed text-[var(--text-muted)]">
+              Sora is used for headings to give a modern, geometric feel that builds trust. Inter is used for all body text and numerical data because of its high legibility on small screens.
+            </p>
+          </div>
         </div>
-      </section>
+      </Section>
 
-      {/* Additional Screens */}
-      <section className="relative py-20 md:py-32 bg-[var(--bg-secondary)]">
-        <div className="section-container">
-          <motion.div {...fadeInUp} className="mb-12">
-            <h2 className="text-[32px] md:text-[44px] leading-[1.2] font-bold tracking-[-0.02em] text-[var(--text)]">
-              More Screens
-            </h2>
-          </motion.div>
-
-          <motion.div
-            variants={staggerContainer}
-            initial="initial"
-            whileInView="whileInView"
-            viewport={{ once: true, amount: 0.15 }}
-            className="grid grid-cols-1 md:grid-cols-4 gap-6"
-          >
+      {/* Screen Showcase Gallery */}
+      <Section className="border-t border-[var(--border)]">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex items-center justify-center gap-2 text-[12px] tracking-[0.2em] uppercase text-[var(--text-muted)] mb-12">
+            <span className="w-8 h-px bg-[var(--border)]" />
+            Final Designs
+            <span className="w-8 h-px bg-[var(--border)]" />
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             {[
-              { src: '/projects/nova-trade/splash-screen.png', title: 'Splash Screen' },
-              { src: '/projects/nova-trade/welcome-back.png', title: 'Authentication' },
-              { src: '/projects/nova-trade/dashboard-invest.png', title: 'Watchlist' },
-              { src: '/projects/nova-trade/portfolio-overview.png', title: 'Assets' },
+              { src: "/projects/nova-trade/dashboard-invest.png", label: "Invest Dashboard" },
+              { src: "/projects/nova-trade/dashboard-trade.png", label: "Trade Dashboard" },
+              { src: "/projects/nova-trade/portfolio-overview.png", label: "Portfolio" },
+              { src: "/projects/nova-trade/trade-screen.png", label: "Trade Screen" },
+              { src: "/projects/nova-trade/allocation-chart.png", label: "Allocation" },
+              { src: "/projects/nova-trade/pnl-graph.png", label: "PNL Graph" },
+              { src: "/projects/nova-trade/welcome-back.png", label: "Login" },
+              { src: "/projects/nova-trade/splash-screen.png", label: "Splash" },
             ].map((screen, i) => (
-              <motion.div
+              <motion.div 
                 key={i}
-                variants={fadeInUp}
-                className="relative h-[300px] md:h-[400px] rounded-2xl overflow-hidden border border-[var(--border)]"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="group relative flex flex-col items-center"
               >
-                <Image
-                  src={screen.src}
-                  alt={screen.title}
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-4">
-                  <h3 className="text-[16px] font-semibold text-white">{screen.title}</h3>
+                <div className="relative w-full aspect-[9/19] rounded-[24px] md:rounded-[32px] overflow-hidden border-[4px] md:border-[6px] border-[var(--border-dark)] shadow-xl bg-black">
+                  <Image
+                    src={screen.src}
+                    alt={screen.label}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
                 </div>
+                <p className="mt-4 text-[12px] md:text-[13px] font-medium tracking-wide text-[var(--text-muted)] uppercase text-center">
+                  {screen.label}
+                </p>
               </motion.div>
             ))}
-          </motion.div>
+          </div>
         </div>
-      </section>
+      </Section>
 
-      {/* Back to Work CTA */}
-      <section className="relative py-16 md:py-20">
-        <div className="section-container text-center">
-          <motion.div {...fadeInUp}>
-            <h2 className="text-[28px] md:text-[36px] leading-[1.2] font-bold tracking-[-0.02em] text-[var(--text)] mb-6">
-              Explore More Work
-            </h2>
-            <Link
-              href="/#work"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[var(--border)] bg-[var(--border)] text-[var(--text)] hover:bg-[var(--border-hover)] transition-all duration-300"
-            >
-              View All Projects
-            </Link>
-          </motion.div>
+      {/* Full Screen Showcase */}
+      <Section className="bg-[var(--bg-secondary)]">
+        <div className="max-w-5xl mx-auto text-center">
+          <h2 className="text-sm uppercase tracking-widest text-[var(--text-muted)] mb-10">System Architecture Overview</h2>
+          <div className="relative w-full rounded-[24px] md:rounded-[32px] overflow-hidden border border-[var(--border)] bg-[var(--bg)] shadow-2xl">
+             <Image
+              src="/projects/nova-trade/card-cover.jpg"
+              alt="Nova Trade Full Ecosystem Overview"
+              width={2000}
+              height={1200}
+              className="w-full h-auto opacity-90"
+            />
+          </div>
         </div>
-      </section>
+      </Section>
+
+      {/* Next Project Footer */}
+      <footer className="w-full px-6 md:px-12 lg:px-24 py-32 border-t border-[var(--border)] bg-[var(--bg)] relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-t from-[#4E7BFF]/5 to-transparent pointer-events-none" />
+        <div className="relative z-10 max-w-4xl mx-auto text-center">
+          <span className="text-[11px] text-[var(--text-muted)] uppercase tracking-[0.25em] mb-6 block">Continue the journey</span>
+          <h2 className={`text-[40px] md:text-[64px] font-bold tracking-tight mb-10 leading-none text-[var(--text)] ${sora.className}`}>
+            JobSpot
+          </h2>
+          <p className="text-[var(--text-muted)] max-w-lg mx-auto mb-10 text-[16px] leading-relaxed">
+            A responsive job search dashboard that helps candidates track applications and visualize their job hunt progress.
+          </p>
+          <Link
+            href="/"
+            className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[var(--text)] text-[var(--bg)] font-semibold text-[15px] hover:bg-white hover:scale-105 transition-all duration-300 shadow-xl shadow-white/5"
+          >
+            View More Projects
+            <ExternalLink size={18} />
+          </Link>
+        </div>
+      </footer>
     </main>
   );
 }
