@@ -57,7 +57,7 @@ export const projects = [
     tags: ['Mobile App', 'Fintech', 'Crypto'],
     description:
       'A beginner-friendly crypto trading platform designed to make digital asset investing simple, safe, and educational. Features guided onboarding, risk education, and a built-in learning tab.',
-    image: '/projects/nova-trade/card-cover.jpg',
+    image: '/projects/nova-trade/card-cover-new.jpg',
     year: '2024',
     role: 'UI/UX Designer',
     accent: '#00D4FF',
@@ -69,7 +69,7 @@ export const projects = [
     tags: ['Mobile', 'Fintech', 'Conversational UI'],
     description:
       'An AI-powered chatbot built into the FinTrust finance app — giving users instant, intelligent support for financial queries and app issues. Operating 24/7 with privacy and security at its core, it trims support time, lifts engagement, and quietly nudges users toward better financial literacy.',
-    image: '/Fintrust.jpg',
+    image: '/projects/fintrust/card-cover-new.jpg',
     year: '2025',
     role: 'UI/UX Designer',
     accent: '#7C5CFF',
