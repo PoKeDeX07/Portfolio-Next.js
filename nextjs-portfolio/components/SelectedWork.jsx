@@ -2,23 +2,35 @@
 
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { projects } from '@/data/portfolio';
 import { TiltCard } from '@/components/TiltCard';
 
 const ProjectCard = ({ project, index }) => {
+  const isInternal = project.link?.startsWith('/');
   const Wrapper = ({ children }) =>
     project.link ? (
-      <a
-        href={project.link}
-        target="_blank"
-        rel="noreferrer"
-        aria-label={`${project.title} — view on Behance`}
-        className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-from)]/30 rounded-[24px]"
-      >
-        {children}
-      </a>
+      isInternal ? (
+        <Link
+          href={project.link}
+          aria-label={`${project.title} — view case study`}
+          className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-from)]/30 rounded-[24px]"
+        >
+          {children}
+        </Link>
+      ) : (
+        <a
+          href={project.link}
+          target="_blank"
+          rel="noreferrer"
+          aria-label={`${project.title} — view on Behance`}
+          className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-from)]/30 rounded-[24px]"
+        >
+          {children}
+        </a>
+      )
     ) : (
       <>{children}</>
     );

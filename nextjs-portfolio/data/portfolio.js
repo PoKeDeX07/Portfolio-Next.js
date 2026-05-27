@@ -52,6 +52,18 @@ export const tools = [
 
 export const projects = [
   {
+    id: 'nova-trade',
+    title: 'Nova Trade — Crypto Trading Platform',
+    tags: ['Mobile App', 'Fintech', 'Crypto'],
+    description:
+      'A beginner-friendly crypto trading platform designed to make digital asset investing simple, safe, and educational. Features guided onboarding, risk education, and a built-in learning tab.',
+    image: '/projects/nova-trade/card-cover.jpg',
+    year: '2024',
+    role: 'UI/UX Designer',
+    accent: '#00D4FF',
+    link: '/projects/nova-trade',
+  },
+  {
     id: 'fintrust',
     title: 'FinTrust — Finance AI Chat Bot',
     tags: ['Mobile', 'Fintech', 'Conversational UI'],
