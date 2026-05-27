@@ -135,13 +135,13 @@ export default function NovaTradeCaseStudy() {
             {[
               { 
                 icon: ShieldCheck, 
-                title: "Risk Education", 
-                desc: "Built-in risk meters to help users understand their exposure before placing any trade." 
+                title: "Dual-Mode Experience", 
+                desc: "Designed separate flows for investors and active traders, reducing complexity for beginners while enabling advanced trading workflows for experienced users." 
               },
               { 
                 icon: Zap, 
-                title: "Guided Onboarding", 
-                desc: "A simplified, step-by-step approach for KYC and wallet setup to reduce drop-offs." 
+                title: "Real-Time Portfolio Monitoring", 
+                desc: "Built a live portfolio tracking experience with allocation insights, active positions, and continuous P&L visibility for better decision-making in volatile markets." 
               }
             ].map((item, i) => (
               <div key={i} className="p-8 rounded-[24px] bg-[var(--border)]/30 border border-[var(--border)] backdrop-blur-sm group hover:bg-[var(--border)] hover:border-[var(--border-hover)] transition-all duration-300">
