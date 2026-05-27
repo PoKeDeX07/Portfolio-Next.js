@@ -267,22 +267,6 @@ export default function NovaTradeCaseStudy() {
         </div>
       </Section>
 
-      {/* Full Screen Showcase */}
-      <Section className="bg-[var(--bg-secondary)]">
-        <div className="max-w-5xl mx-auto text-center">
-          <h2 className="text-sm uppercase tracking-widest text-[var(--text-muted)] mb-10">System Architecture Overview</h2>
-          <div className="relative w-full rounded-[24px] md:rounded-[32px] overflow-hidden border-[6px] border-[#2A2D3A] bg-[var(--bg)] shadow-2xl">
-             <Image
-              src="/projects/nova-trade/card-cover.jpg"
-              alt="Nova Trade Full Ecosystem Overview"
-              width={2000}
-              height={1200}
-              className="w-full h-auto opacity-90"
-            />
-          </div>
-        </div>
-      </Section>
-
       {/* Next Project Footer */}
       <footer className="w-full px-6 md:px-12 lg:px-24 py-32 border-t border-[var(--border)] bg-[var(--bg)] relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-t from-[#4E7BFF]/5 to-transparent pointer-events-none" />
