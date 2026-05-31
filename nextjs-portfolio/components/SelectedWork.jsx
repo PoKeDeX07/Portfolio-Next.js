@@ -45,11 +45,7 @@ const ProjectCard = ({ project, index }) => {
       <Wrapper>
         <TiltCard className="relative" intensity={6}>
           <article
-            className="group relative overflow-hidden rounded-[24px] border border-[var(--border)] bg-[var(--card-bg)] backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 hover:border-[var(--border-hover)]"
-            style={{
-              boxShadow:
-                '0 1px 0 rgba(255,255,255,0.04) inset, 0 30px 60px -30px rgba(0,0,0,0.25)',
-            }}
+            className="group relative overflow-hidden rounded-[24px] border border-[var(--border)] bg-[var(--card-bg)] backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 hover:border-[var(--border-hover)] dark:shadow-[0_1px_0_rgba(255,255,255,0.04)_inset,_0_30px_60px_-30px_rgba(0,0,0,0.25)] dark:hover:shadow-[0_1px_0_rgba(255,255,255,0.04)_inset,_0_30px_60px_-30px_rgba(0,0,0,0.25)] light:shadow-none light:hover:shadow-[0_10px_30px_rgba(0,0,0,0.1)]"
           >
             <div className="grid md:grid-cols-5 gap-0">
               <div className="md:col-span-3 p-5 md:p-8">
