@@ -48,7 +48,7 @@ const Experience = () => {
                 Experience
               </div>
               <h2 className="mt-5 text-[28px] md:text-[36px] leading-[1.15] font-semibold tracking-[-0.025em] text-[var(--text)]">
-                3.5 years, one steady throughline.
+                4 years, one steady throughline.
               </h2>
               <p className="mt-5 text-[15px] leading-[1.7] text-[var(--text-muted)] max-w-sm">
                 Different companies, different industries — one thread of craft running through all of them.
