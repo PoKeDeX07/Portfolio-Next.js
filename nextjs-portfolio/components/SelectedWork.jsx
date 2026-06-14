@@ -11,48 +11,38 @@ import { TiltCard } from '@/components/TiltCard';
 const ProjectCard = ({ project, index, progress }) => {
   const isInternal = project.link?.startsWith('/');
   
-  // Map scroll progress to determine active card index
-  const activeCardIndex = useTransform(progress, (latest) => {
-    return Math.min(Math.floor(latest * projects.length), projects.length - 1);
-  });
-
-  // Calculate position relative to active card
-  // If card is active (index === activeCardIndex), it's at z-index high and scale 1
-  // If card is before active, it moves to back with low z-index
-  // If card is after active, it waits in stack below with offset and reduced z-index
+  // Smooth scroll progress: each card gets ~35% of total scroll height
+  const cardStart = index / projects.length;
+  const cardEnd = (index + 1.2) / projects.length;
   
-  const yOffset = useTransform(activeCardIndex, (active) => {
-    const diff = index - active;
-    if (diff > 0) {
-      // Cards below the active card are stacked with 15px offset each
-      return Math.min(diff * 15, 30); // Cap offset to 30px
-    }
-    return 0; // Active card and past cards at y: 0
+  // Normalized progress for this specific card (0 to 1)
+  const cardProgress = useTransform(progress, [cardStart, cardEnd], [0, 1], {
+    clamp: true,
   });
 
-  const scale = useTransform(activeCardIndex, (active) => {
-    const diff = index - active;
-    if (diff === 0) return 1; // Active card full size
-    if (diff > 0) return Math.max(0.98 - diff * 0.02, 0.94); // Cards below slightly scaled
-    return 0.95; // Past cards minimized
+  // Y offset: cards come up from below smoothly
+  const yOffset = useTransform(cardProgress, [0, 0.5, 1], [60, 30, 0], {
+    clamp: true,
   });
 
-  const opacity = useTransform(activeCardIndex, (active) => {
-    const diff = index - active;
-    if (diff === 0) return 1; // Active card fully visible
-    if (diff === 1) return 0.6; // Next card slightly visible
-    if (diff > 1) return 0; // Cards further down hidden
-    return 0; // Past cards hidden
+  // Scale: smooth entrance with slight scaling
+  const scale = useTransform(cardProgress, [0, 0.5, 1], [0.92, 0.96, 1], {
+    clamp: true,
   });
 
-  const zIndex = useTransform(activeCardIndex, (active) => {
-    const diff = index - active;
-    if (diff >= 0) {
-      // Active and upcoming cards: higher z-index
-      return projects.length - diff;
-    }
-    // Past cards: negative z-index (behind)
-    return -Math.abs(diff);
+  // Opacity: smooth fade in
+  const opacity = useTransform(cardProgress, [0, 0.3, 0.8, 1], [0, 0.4, 0.8, 1], {
+    clamp: true,
+  });
+
+  // Z-index: higher value as card becomes active (based on progress)
+  const zIndex = useTransform(cardProgress, [0, 0.5, 1], [index, index + projects.length / 2, projects.length + index], {
+    clamp: true,
+  });
+
+  // Slight rotation for depth perception (only on active and near-active cards)
+  const rotateZ = useTransform(cardProgress, [0, 0.5, 1], [-1, 0, 0.5], {
+    clamp: true,
   });
 
   const Wrapper = ({ children }) =>
@@ -87,8 +77,9 @@ const ProjectCard = ({ project, index, progress }) => {
         scale,
         opacity,
         zIndex,
+        rotateZ,
       }}
-      className="absolute w-full"
+      className="absolute w-full will-change-transform"
     >
       <Wrapper>
         <TiltCard className="relative" intensity={6}>
@@ -201,9 +192,9 @@ const SelectedWork = () => {
 
       {/* Stacked cards container */}
       {isDesktop ? (
-        <div className="relative h-[300vh] hidden md:block">
+        <div className="relative hidden md:block" style={{ height: `${(projects.length + 1) * 150}vh` }}>
           <div className="sticky top-[var(--header-height,0px)] h-screen flex items-center justify-center overflow-hidden">
-            <div className="relative w-full max-w-6xl h-[70vh] px-6 lg:px-0">
+            <div className="relative w-full max-w-6xl h-[65vh] px-6 lg:px-0">
               {projects.map((project, index) => (
                 <ProjectCard
                   key={project.id}
