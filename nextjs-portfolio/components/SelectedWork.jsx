@@ -14,9 +14,11 @@ const ProjectCard = ({ project, index, progress }) => {
   // Calculate card-specific transforms based on scroll progress
   const cardProgress = useTransform(progress, [index * 0.25, (index + 1) * 0.25], [0, 1]);
   const yOffset = useTransform(cardProgress, [0, 1], [100, 0]);
-  const scale = useTransform(cardProgress, [0, 1], [0.95, 1]);
+  // Scale up as card comes into view, and keep previous cards slightly scaled down for depth
+  const scale = useTransform(cardProgress, [0, 0.5, 1], [0.9, 0.97, 1]);
   const opacity = useTransform(cardProgress, [0, 0.3, 1], [0, 0.5, 1]);
-  const zIndex = useTransform(cardProgress, [0, 1], [index, projects.length - index]);
+  // Z-index increases as card scrolls into view, ensuring newer cards appear on top
+  const zIndex = useTransform(cardProgress, [0, 1], [index, index + projects.length]);
 
   const Wrapper = ({ children }) =>
     project.link ? (
@@ -134,7 +136,7 @@ const SelectedWork = () => {
   return (
     <section id="work" className="relative" ref={containerRef}>
       {/* Header - sticky at top */}
-      <div className="sticky top-0 z-40 bg-[var(--bg)] backdrop-blur-md border-b border-[var(--border)] py-8 md:py-12">
+      <div className="sticky top-0 z-50 bg-[var(--bg)] backdrop-blur-md border-b border-[var(--border)] py-8 md:py-12">
         <div className="section-container">
           <motion.div
             initial={{ opacity: 0, y: 18 }}
