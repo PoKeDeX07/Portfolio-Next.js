@@ -11,35 +11,32 @@ import { TiltCard } from '@/components/TiltCard';
 const ProjectCard = ({ project, index, progress }) => {
   const isInternal = project.link?.startsWith('/');
   
-  // Calculate scroll range for this card (each card gets 1/projects.length of scroll)
-  const cardStart = index / projects.length;
-  const cardEnd = (index + 1) / projects.length;
+  // Staggered scroll ranges: each card animates over a wider window for smooth transitions
+  // This allows overlap where previous card scales down as new card appears
+  const cardStart = index * 0.25;
+  const cardEnd = Math.min((index + 1.5) * 0.25, 1);
   
-  // Map scroll progress to card animation (0 = below, 1 = top)
+  // Map scroll progress to card animation (0 = hidden below, 1 = fully stacked)
   const cardProgress = useTransform(progress, [cardStart, cardEnd], [0, 1], {
     clamp: true,
   });
 
-  // Y offset: cards slide up from 500px below to final stacked position
-  // Each card gets scaled down position based on how many cards are above it
-  const yOffset = useTransform(cardProgress, [0, 0.6, 1], [500, 100, index * -20], {
+  // Y offset: cards smoothly slide up from below the viewport to their stacked position
+  const yOffset = useTransform(cardProgress, [0, 1], [400, index * -18], {
     clamp: true,
   });
 
-  // Scale: cards start small and grow to full size
-  const scale = useTransform(cardProgress, [0, 0.5, 1], [0.85, 0.93, 1], {
+  // Scale: cards grow from 0.88 to 1, and shrink back when the next card takes over
+  // This creates the "background card receding" effect
+  const scale = useTransform(cardProgress, [0, 0.6, 1], [0.88, 1, 0.92], {
     clamp: true,
   });
 
-  // Opacity: smooth fade in
-  const opacity = useTransform(cardProgress, [0, 0.2, 0.7, 1], [0, 0.5, 0.9, 1], {
-    clamp: true,
-  });
+  // Z-index: continuously increases to maintain proper stacking order
+  const zIndex = useTransform(cardProgress, [0, 1], [index, index + projects.length]);
 
-  // Z-index: increases as card scrolls in, then decreases as next card takes over
-  const zIndex = useTransform(cardProgress, [0, 0.5, 1], [index, projects.length - index, index], {
-    clamp: true,
-  });
+  // Shadow depth: increases as card comes to front, decreases as it goes to back
+  const shadowOpacity = useTransform(cardProgress, [0, 0.5, 1], [0, 1, 0.5]);
 
   const Wrapper = ({ children }) =>
     project.link ? (
@@ -71,10 +68,10 @@ const ProjectCard = ({ project, index, progress }) => {
       style={{
         y: yOffset,
         scale,
-        opacity,
         zIndex,
+        boxShadow: shadowOpacity.get ? shadowOpacity : undefined,
       }}
-      className="absolute top-0 left-0 right-0 w-full will-change-transform"
+      className="absolute top-0 left-0 right-0 w-full opacity-100 will-change-transform"
     >
       <Wrapper>
         <TiltCard className="relative" intensity={6}>
@@ -155,9 +152,9 @@ const SelectedWork = () => {
   });
 
   return (
-    <section id="work" className="relative py-24 md:py-32" ref={containerRef}>
+    <section id="work" className="relative" ref={containerRef}>
       {/* Header */}
-      <div className="section-container mb-20 md:mb-32">
+      <div className="section-container py-24 md:py-32 mb-20 md:mb-32">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -185,8 +182,8 @@ const SelectedWork = () => {
 
       {/* Stacked cards container */}
       {isDesktop ? (
-        <div className="relative hidden md:block" style={{ height: `${(projects.length + 0.8) * 120}vh` }}>
-          <div className="fixed inset-0 top-0 h-screen pointer-events-none flex items-center justify-center overflow-hidden" style={{ pointerEvents: 'auto' }}>
+        <div className="relative hidden md:block" style={{ height: `${(projects.length + 1.2) * 120}vh` }}>
+          <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
             <div className="relative w-full max-w-6xl h-[60vh] px-6 lg:px-0">
               {projects.map((project, index) => (
                 <ProjectCard
