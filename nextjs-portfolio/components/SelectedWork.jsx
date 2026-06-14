@@ -11,14 +11,49 @@ import { TiltCard } from '@/components/TiltCard';
 const ProjectCard = ({ project, index, progress }) => {
   const isInternal = project.link?.startsWith('/');
   
-  // Calculate card-specific transforms based on scroll progress
-  const cardProgress = useTransform(progress, [index * 0.25, (index + 1) * 0.25], [0, 1]);
-  const yOffset = useTransform(cardProgress, [0, 1], [100, 0]);
-  // Scale up as card comes into view, and keep previous cards slightly scaled down for depth
-  const scale = useTransform(cardProgress, [0, 0.5, 1], [0.9, 0.97, 1]);
-  const opacity = useTransform(cardProgress, [0, 0.3, 1], [0, 0.5, 1]);
-  // Z-index increases as card scrolls into view, ensuring newer cards appear on top
-  const zIndex = useTransform(cardProgress, [0, 1], [index, index + projects.length]);
+  // Map scroll progress to determine active card index
+  const activeCardIndex = useTransform(progress, (latest) => {
+    return Math.min(Math.floor(latest * projects.length), projects.length - 1);
+  });
+
+  // Calculate position relative to active card
+  // If card is active (index === activeCardIndex), it's at z-index high and scale 1
+  // If card is before active, it moves to back with low z-index
+  // If card is after active, it waits in stack below with offset and reduced z-index
+  
+  const yOffset = useTransform(activeCardIndex, (active) => {
+    const diff = index - active;
+    if (diff > 0) {
+      // Cards below the active card are stacked with 15px offset each
+      return Math.min(diff * 15, 30); // Cap offset to 30px
+    }
+    return 0; // Active card and past cards at y: 0
+  });
+
+  const scale = useTransform(activeCardIndex, (active) => {
+    const diff = index - active;
+    if (diff === 0) return 1; // Active card full size
+    if (diff > 0) return Math.max(0.98 - diff * 0.02, 0.94); // Cards below slightly scaled
+    return 0.95; // Past cards minimized
+  });
+
+  const opacity = useTransform(activeCardIndex, (active) => {
+    const diff = index - active;
+    if (diff === 0) return 1; // Active card fully visible
+    if (diff === 1) return 0.6; // Next card slightly visible
+    if (diff > 1) return 0; // Cards further down hidden
+    return 0; // Past cards hidden
+  });
+
+  const zIndex = useTransform(activeCardIndex, (active) => {
+    const diff = index - active;
+    if (diff >= 0) {
+      // Active and upcoming cards: higher z-index
+      return projects.length - diff;
+    }
+    // Past cards: negative z-index (behind)
+    return -Math.abs(diff);
+  });
 
   const Wrapper = ({ children }) =>
     project.link ? (
@@ -166,9 +201,9 @@ const SelectedWork = () => {
 
       {/* Stacked cards container */}
       {isDesktop ? (
-        <div className="relative h-[400vh] hidden md:block">
-          <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden section-container-full">
-            <div className="relative w-full max-w-6xl h-[70vh]">
+        <div className="relative h-[300vh] hidden md:block">
+          <div className="sticky top-[var(--header-height,0px)] h-screen flex items-center justify-center overflow-hidden">
+            <div className="relative w-full max-w-6xl h-[70vh] px-6 lg:px-0">
               {projects.map((project, index) => (
                 <ProjectCard
                   key={project.id}
