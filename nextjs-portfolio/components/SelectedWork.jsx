@@ -1,15 +1,23 @@
 'use client';
 
-import React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { projects } from '@/data/portfolio';
 import { TiltCard } from '@/components/TiltCard';
 
-const ProjectCard = ({ project, index }) => {
+const ProjectCard = ({ project, index, progress }) => {
   const isInternal = project.link?.startsWith('/');
+  
+  // Calculate card-specific transforms based on scroll progress
+  const cardProgress = useTransform(progress, [index * 0.25, (index + 1) * 0.25], [0, 1]);
+  const yOffset = useTransform(cardProgress, [0, 1], [100, 0]);
+  const scale = useTransform(cardProgress, [0, 1], [0.95, 1]);
+  const opacity = useTransform(cardProgress, [0, 0.3, 1], [0, 0.5, 1]);
+  const zIndex = useTransform(cardProgress, [0, 1], [index, projects.length - index]);
+
   const Wrapper = ({ children }) =>
     project.link ? (
       isInternal ? (
@@ -37,10 +45,13 @@ const ProjectCard = ({ project, index }) => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 32 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.7, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] }}
+      style={{
+        y: yOffset,
+        scale,
+        opacity,
+        zIndex,
+      }}
+      className="absolute w-full"
     >
       <Wrapper>
         <TiltCard className="relative" intensity={6}>
@@ -104,39 +115,87 @@ const ProjectCard = ({ project, index }) => {
 };
 
 const SelectedWork = () => {
-  return (
-    <section id="work" className="relative py-24 md:py-32">
-      <div className="section-container">
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="flex items-end justify-between gap-6 mb-14 md:mb-20"
-        >
-          <div>
-            <div className="flex items-center gap-2 text-[12px] tracking-[0.2em] uppercase text-[var(--text-muted)]">
-              <span className="w-8 h-px bg-[var(--border-hover)]" />
-              Selected Work
-            </div>
-            <h2 className="mt-5 text-[32px] sm:text-[40px] md:text-[52px] leading-[1.1] font-semibold tracking-[-0.03em] text-[var(--text)] max-w-3xl">
-              A short reel of projects I&apos;m most proud of.
-            </h2>
-          </div>
-          <div className="hidden md:block text-right">
-            <div className="text-[12px] tracking-[0.2em] uppercase text-[var(--text-muted)]">Count</div>
-            <div className="text-[28px] font-semibold tracking-tight text-[var(--text)]">
-              {String(projects.length).padStart(2, '0')}
-            </div>
-          </div>
-        </motion.div>
+  const containerRef = useRef(null);
+  const [isDesktop, setIsDesktop] = useState(false);
 
-        <div className="grid grid-cols-1 gap-6 md:gap-8">
-          {projects.map((p, i) => (
-            <ProjectCard key={p.id} project={p} index={i} />
-          ))}
+  useEffect(() => {
+    // Check if desktop (md breakpoint and above)
+    const checkDesktop = () => setIsDesktop(window.innerWidth >= 768);
+    checkDesktop();
+    window.addEventListener('resize', checkDesktop);
+    return () => window.removeEventListener('resize', checkDesktop);
+  }, []);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start start', 'end end'],
+  });
+
+  return (
+    <section id="work" className="relative" ref={containerRef}>
+      {/* Header - sticky at top */}
+      <div className="sticky top-0 z-40 bg-[var(--bg)] backdrop-blur-md border-b border-[var(--border)] py-8 md:py-12">
+        <div className="section-container">
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="flex items-end justify-between gap-6"
+          >
+            <div>
+              <div className="flex items-center gap-2 text-[12px] tracking-[0.2em] uppercase text-[var(--text-muted)]">
+                <span className="w-8 h-px bg-[var(--border-hover)]" />
+                Selected Work
+              </div>
+              <h2 className="mt-5 text-[32px] sm:text-[40px] md:text-[52px] leading-[1.1] font-semibold tracking-[-0.03em] text-[var(--text)] max-w-3xl">
+                A short reel of projects I&apos;m most proud of.
+              </h2>
+            </div>
+            <div className="hidden md:block text-right">
+              <div className="text-[12px] tracking-[0.2em] uppercase text-[var(--text-muted)]">Count</div>
+              <div className="text-[28px] font-semibold tracking-tight text-[var(--text)]">
+                {String(projects.length).padStart(2, '0')}
+              </div>
+            </div>
+          </motion.div>
         </div>
       </div>
+
+      {/* Stacked cards container */}
+      {isDesktop ? (
+        <div className="relative h-[400vh] hidden md:block">
+          <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden section-container-full">
+            <div className="relative w-full max-w-6xl h-[70vh]">
+              {projects.map((project, index) => (
+                <ProjectCard
+                  key={project.id}
+                  project={project}
+                  index={index}
+                  progress={scrollYProgress}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      ) : (
+        /* Mobile: traditional grid layout */
+        <div className="section-container py-12 md:hidden">
+          <div className="grid grid-cols-1 gap-6">
+            {projects.map((p, i) => (
+              <motion.div
+                key={p.id}
+                initial={{ opacity: 0, y: 32 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.7, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <ProjectCard project={p} index={i} progress={scrollYProgress} />
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      )}
     </section>
   );
 };
