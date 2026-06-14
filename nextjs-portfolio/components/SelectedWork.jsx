@@ -11,37 +11,33 @@ import { TiltCard } from '@/components/TiltCard';
 const ProjectCard = ({ project, index, progress }) => {
   const isInternal = project.link?.startsWith('/');
   
-  // Smooth scroll progress: each card gets ~35% of total scroll height
+  // Calculate scroll range for this card (each card gets 1/projects.length of scroll)
   const cardStart = index / projects.length;
-  const cardEnd = (index + 1.2) / projects.length;
+  const cardEnd = (index + 1) / projects.length;
   
-  // Normalized progress for this specific card (0 to 1)
+  // Map scroll progress to card animation (0 = below, 1 = top)
   const cardProgress = useTransform(progress, [cardStart, cardEnd], [0, 1], {
     clamp: true,
   });
 
-  // Y offset: cards come up from below smoothly
-  const yOffset = useTransform(cardProgress, [0, 0.5, 1], [60, 30, 0], {
+  // Y offset: cards slide up from 500px below to final stacked position
+  // Each card gets scaled down position based on how many cards are above it
+  const yOffset = useTransform(cardProgress, [0, 0.6, 1], [500, 100, index * -20], {
     clamp: true,
   });
 
-  // Scale: smooth entrance with slight scaling
-  const scale = useTransform(cardProgress, [0, 0.5, 1], [0.92, 0.96, 1], {
+  // Scale: cards start small and grow to full size
+  const scale = useTransform(cardProgress, [0, 0.5, 1], [0.85, 0.93, 1], {
     clamp: true,
   });
 
   // Opacity: smooth fade in
-  const opacity = useTransform(cardProgress, [0, 0.3, 0.8, 1], [0, 0.4, 0.8, 1], {
+  const opacity = useTransform(cardProgress, [0, 0.2, 0.7, 1], [0, 0.5, 0.9, 1], {
     clamp: true,
   });
 
-  // Z-index: higher value as card becomes active (based on progress)
-  const zIndex = useTransform(cardProgress, [0, 0.5, 1], [index, index + projects.length / 2, projects.length + index], {
-    clamp: true,
-  });
-
-  // Slight rotation for depth perception (only on active and near-active cards)
-  const rotateZ = useTransform(cardProgress, [0, 0.5, 1], [-1, 0, 0.5], {
+  // Z-index: increases as card scrolls in, then decreases as next card takes over
+  const zIndex = useTransform(cardProgress, [0, 0.5, 1], [index, projects.length - index, index], {
     clamp: true,
   });
 
@@ -77,9 +73,8 @@ const ProjectCard = ({ project, index, progress }) => {
         scale,
         opacity,
         zIndex,
-        rotateZ,
       }}
-      className="absolute w-full will-change-transform"
+      className="absolute top-0 left-0 right-0 w-full will-change-transform"
     >
       <Wrapper>
         <TiltCard className="relative" intensity={6}>
@@ -160,41 +155,39 @@ const SelectedWork = () => {
   });
 
   return (
-    <section id="work" className="relative" ref={containerRef}>
-      {/* Header - sticky at top */}
-      <div className="sticky top-0 z-50 bg-[var(--bg)] backdrop-blur-md border-b border-[var(--border)] py-8 md:py-12">
-        <div className="section-container">
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="flex items-end justify-between gap-6"
-          >
-            <div>
-              <div className="flex items-center gap-2 text-[12px] tracking-[0.2em] uppercase text-[var(--text-muted)]">
-                <span className="w-8 h-px bg-[var(--border-hover)]" />
-                Selected Work
-              </div>
-              <h2 className="mt-5 text-[32px] sm:text-[40px] md:text-[52px] leading-[1.1] font-semibold tracking-[-0.03em] text-[var(--text)] max-w-3xl">
-                A short reel of projects I&apos;m most proud of.
-              </h2>
+    <section id="work" className="relative py-24 md:py-32" ref={containerRef}>
+      {/* Header */}
+      <div className="section-container mb-20 md:mb-32">
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="flex items-end justify-between gap-6"
+        >
+          <div>
+            <div className="flex items-center gap-2 text-[12px] tracking-[0.2em] uppercase text-[var(--text-muted)]">
+              <span className="w-8 h-px bg-[var(--border-hover)]" />
+              Selected Work
             </div>
-            <div className="hidden md:block text-right">
-              <div className="text-[12px] tracking-[0.2em] uppercase text-[var(--text-muted)]">Count</div>
-              <div className="text-[28px] font-semibold tracking-tight text-[var(--text)]">
-                {String(projects.length).padStart(2, '0')}
-              </div>
+            <h2 className="mt-5 text-[32px] sm:text-[40px] md:text-[52px] leading-[1.1] font-semibold tracking-[-0.03em] text-[var(--text)] max-w-3xl">
+              A short reel of projects I&apos;m most proud of.
+            </h2>
+          </div>
+          <div className="hidden md:block text-right">
+            <div className="text-[12px] tracking-[0.2em] uppercase text-[var(--text-muted)]">Count</div>
+            <div className="text-[28px] font-semibold tracking-tight text-[var(--text)]">
+              {String(projects.length).padStart(2, '0')}
             </div>
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
       </div>
 
       {/* Stacked cards container */}
       {isDesktop ? (
-        <div className="relative hidden md:block" style={{ height: `${(projects.length + 1) * 150}vh` }}>
-          <div className="sticky top-[var(--header-height,0px)] h-screen flex items-center justify-center overflow-hidden">
-            <div className="relative w-full max-w-6xl h-[65vh] px-6 lg:px-0">
+        <div className="relative hidden md:block" style={{ height: `${(projects.length + 0.8) * 120}vh` }}>
+          <div className="fixed inset-0 top-0 h-screen pointer-events-none flex items-center justify-center overflow-hidden" style={{ pointerEvents: 'auto' }}>
+            <div className="relative w-full max-w-6xl h-[60vh] px-6 lg:px-0">
               {projects.map((project, index) => (
                 <ProjectCard
                   key={project.id}
