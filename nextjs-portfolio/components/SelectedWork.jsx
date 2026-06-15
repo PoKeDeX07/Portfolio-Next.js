@@ -69,10 +69,10 @@ const ProjectCard = ({ project, index, progress, total }) => {
         opacity,
         zIndex: index + 1,
       }}
-      className="sticky top-[8vh] h-[84vh] will-change-transform px-4 sm:px-8 lg:px-16 xl:px-24"
+      className="sticky top-0 h-screen flex items-center justify-center pt-16 will-change-transform px-4 sm:px-8 lg:px-16 xl:px-24"
     >
       <Wrapper>
-        <TiltCard className="relative h-[92%] mx-auto max-w-7xl" intensity={6}>
+        <TiltCard className="relative w-full h-[80vh] mx-auto max-w-7xl" intensity={6}>
           <article className="group relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card-bg)] backdrop-blur-sm h-full transition-all duration-500 hover:border-[var(--border-hover)] shadow-[0_1px_0_rgba(255,255,255,0.04)_inset,_0_10px_25px_rgba(0,0,0,0.1)] dark:shadow-[0_1px_0_rgba(255,255,255,0.04)_inset,_0_30px_60px_-30px_rgba(0,0,0,0.25)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15)]">
             <div className="grid md:grid-cols-5 gap-0 h-full">
               <div className="md:col-span-3 p-5 md:p-8 flex flex-col justify-center">
@@ -202,8 +202,8 @@ const SelectedWork = () => {
 
   return (
     <section id="work" className="relative">
-      {/* Header */}
-      <div className="section-container pt-20 pb-8 px-4 sm:px-8 lg:px-16 xl:px-24">
+      {/* Header — extra bottom padding so the sticky section doesn't start cramped */}
+      <div className="section-container pt-20 pb-16 md:pb-24 px-4 sm:px-8 lg:px-16 xl:px-24">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
