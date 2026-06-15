@@ -4,38 +4,46 @@ import React, { useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowUpRight } from 'lucide-react';
 import { projects } from '@/data/portfolio';
 import { TiltCard } from '@/components/TiltCard';
 
-const ProjectCard = ({ project, index, progress }) => {
-  const isInternal = project.link?.startsWith('/');
-  const isLastCard = index === projects.length - 1;
+const ProjectCard = ({ project, index, progress, total }) => {
+  const isExternal = project.link?.startsWith('http');
+  const isLastCard = index === total - 1;
 
-  // Map scroll progress for this card: each card gets 1/projects.length of scroll
-  const scaleProgress = useTransform(progress, [index / projects.length, (index + 1) / projects.length], [1, 0.9], {
-    clamp: true,
-  });
+  // Each card gets its own slice of the overall scroll progress.
+  // Hold at full size/opacity for the first half of the slice,
+  // then transition down during the second half — this is what
+  // creates the "lock, read, then stack" feel.
+  const start = index / total;
+  const end = (index + 1) / total;
+  const mid = start + (end - start) * 0.5;
 
-  const opacityProgress = useTransform(progress, [index / projects.length, (index + 1) / projects.length], [1, 0.6], {
-    clamp: true,
-  });
+  const scaleProgress = useTransform(
+    progress,
+    [start, mid, end],
+    [1, 1, 0.9],
+    { clamp: true }
+  );
 
-  // Only scale/fade cards that are NOT the last one
+  const opacityProgress = useTransform(
+    progress,
+    [start, mid, end],
+    [1, 1, 0.6],
+    { clamp: true }
+  );
+
+  // The last card never shrinks/fades — it just sits on top permanently.
   const scale = isLastCard ? 1 : scaleProgress;
   const opacity = isLastCard ? 1 : opacityProgress;
 
-  const Wrapper = ({ children }) =>
-    project.link ? (
-      isInternal ? (
-        <Link
-          href={project.link}
-          aria-label={`${project.title} — view case study`}
-          className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-from)]/30 rounded-2xl"
-        >
-          {children}
-        </Link>
-      ) : (
+  const Wrapper = ({ children }) => {
+    if (!project.link) {
+      return <div className="block rounded-2xl">{children}</div>;
+    }
+
+    if (isExternal) {
+      return (
         <a
           href={project.link}
           target="_blank"
@@ -45,10 +53,19 @@ const ProjectCard = ({ project, index, progress }) => {
         >
           {children}
         </a>
-      )
-    ) : (
-      <>{children}</>
+      );
+    }
+
+    return (
+      <Link
+        href={project.link}
+        aria-label={`${project.title} — view case study`}
+        className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-from)]/30 rounded-2xl"
+      >
+        {children}
+      </Link>
     );
+  };
 
   return (
     <motion.div
@@ -69,7 +86,6 @@ const ProjectCard = ({ project, index, progress }) => {
                     src={project.image}
                     alt={project.title}
                     fill
-                    sizes="(max-width: 768px) 100vw, 60vw"
                     className="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
                   />
                 </div>
@@ -77,37 +93,31 @@ const ProjectCard = ({ project, index, progress }) => {
 
               <div className="md:col-span-2 p-6 md:p-10 flex flex-col justify-between gap-8">
                 <div>
-                  <div className="flex flex-wrap gap-2">
-                    {project.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-2.5 py-1 rounded-full border border-[var(--border)] bg-[var(--border)] text-[11px] tracking-wide text-[var(--text-muted)]"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  <h3 className="mt-6 text-[22px] md:text-[24px] leading-[1.2] font-semibold tracking-[-0.02em] text-[var(--text)] line-clamp-2">
+                  <span className="text-sm font-medium text-[var(--accent-from)]">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <h3 className="mt-4 text-[22px] md:text-[24px] leading-[1.2] font-semibold tracking-[-0.02em] text-[var(--text)]">
                     {project.title}
                   </h3>
-
-                  <p className="mt-3 text-[14px] leading-[1.65] text-[var(--text-muted)] line-clamp-3">
+                  <p className="mt-3 text-[14px] leading-[1.65] text-[var(--text-muted)]">
                     {project.description}
                   </p>
+                  {project.tags && (
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {project.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="px-2.5 py-1 rounded-full border border-[var(--border)] bg-[var(--border)] text-[11px] tracking-wide text-[var(--text-muted)]"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
-                <div className="mt-8 flex items-end justify-between">
-                  <div className="text-[11px] tracking-[0.18em] uppercase text-[var(--text-muted)]">
-                    {project.year} · {project.role}
-                  </div>
-
-                  <span
-                    aria-hidden="true"
-                    className="w-11 h-11 rounded-full border border-[var(--border)] bg-[var(--border)] flex items-center justify-center text-[var(--text)] transition-all duration-500 group-hover:bg-[var(--text)] group-hover:text-[var(--bg)] group-hover:translate-x-1 group-hover:-translate-y-1"
-                  >
-                    <ArrowUpRight size={18} />
-                  </span>
+                <div className="text-[11px] tracking-[0.18em] uppercase text-[var(--text-muted)]">
+                  {project.year} · {project.role}
                 </div>
               </div>
             </div>
@@ -120,7 +130,6 @@ const ProjectCard = ({ project, index, progress }) => {
 
 const SelectedWork = () => {
   const containerRef = useRef(null);
-
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end end'],
@@ -155,14 +164,23 @@ const SelectedWork = () => {
         </motion.div>
       </div>
 
-      {/* Stacking cards container */}
-      <div className="relative hidden md:block overflow-hidden" style={{ height: `${projects.length * 100}vh` }}>
+      {/* Stacking cards container — NOTE: no overflow-hidden, it breaks sticky */}
+      <div
+        className="relative hidden md:block"
+        style={{ height: `${projects.length * 100}vh` }}
+      >
         {projects.map((project, index) => (
-          <ProjectCard key={project.id} project={project} index={index} progress={scrollYProgress} />
+          <ProjectCard
+            key={project.id}
+            project={project}
+            index={index}
+            progress={scrollYProgress}
+            total={projects.length}
+          />
         ))}
       </div>
 
-      {/* Mobile: traditional grid layout */}
+      {/* Mobile: traditional grid layout, no scroll-linked animation */}
       <div className="section-container py-12 md:hidden">
         <div className="grid grid-cols-1 gap-6">
           {projects.map((p, i) => (
@@ -174,7 +192,12 @@ const SelectedWork = () => {
               transition={{ duration: 0.7, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className="relative h-[500px]">
-                <ProjectCard project={p} index={i} progress={scrollYProgress} />
+                <ProjectCard
+                  project={p}
+                  index={i}
+                  progress={scrollYProgress}
+                  total={projects.length}
+                />
               </div>
             </motion.div>
           ))}
