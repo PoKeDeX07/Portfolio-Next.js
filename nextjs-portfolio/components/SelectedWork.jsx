@@ -11,29 +11,31 @@ import { TiltCard } from '@/components/TiltCard';
 const ProjectCard = ({ project, isActive, isNext, index, progress }) => {
   const isInternal = project.link?.startsWith('/');
 
-  // Calculate scroll range: each card gets a dedicated scroll window
-  // isActive card: full visibility and scale
-  // isNext card: preview (10-15% visible at bottom)
+  // Each card occupies 1/projects.length of the scroll range
   const cardStart = index / projects.length;
   const cardEnd = (index + 1) / projects.length;
 
-  // Progress within this card's scroll range
+  // Normalized progress for this card's scroll window
   const cardProgress = useTransform(progress, [cardStart, cardEnd], [0, 1], {
     clamp: true,
   });
 
-  // Y position: next card starts below viewport and slides up
-  const yOffset = useTransform(cardProgress, [0, 1], [300, 0], {
+  // For active cards: scale down as next card enters (1.0 → 0.92)
+  const activeScale = useTransform(cardProgress, [0, 1], [1, 0.92], {
     clamp: true,
   });
 
-  // Scale: incoming card grows from 0.96 to 1
-  const scale = useTransform(cardProgress, [0, 1], [0.96, 1], {
+  // For next cards: scale up and slide up from below
+  const nextYOffset = useTransform(cardProgress, [0, 1], [300, 0], {
     clamp: true,
   });
 
-  // Z-index: ensures proper stacking
-  const zIndex = isActive ? projects.length + 1 : isNext ? projects.length : index;
+  const nextScale = useTransform(cardProgress, [0, 1], [0.96, 1], {
+    clamp: true,
+  });
+
+  // Z-index management: active card high, next card higher during transition
+  const zIndex = isActive ? projects.length : isNext ? projects.length + 1 : 0;
 
   // Only render if active or next card
   if (!isActive && !isNext) return null;
@@ -66,15 +68,18 @@ const ProjectCard = ({ project, isActive, isNext, index, progress }) => {
   return (
     <motion.div
       style={
-        isNext
+        isActive
           ? {
-              y: yOffset,
-              scale,
+              scale: activeScale,
               zIndex,
             }
-          : {
+          : isNext
+          ? {
+              y: nextYOffset,
+              scale: nextScale,
               zIndex,
             }
+          : {}
       }
       className="absolute top-0 left-0 right-0 w-full will-change-transform"
     >
@@ -195,30 +200,37 @@ const SelectedWork = () => {
         >
           <div className="sticky top-0 h-screen w-full flex items-center justify-center">
             <div className="relative w-full max-w-6xl h-[60vh] px-6 lg:px-0">
-              {projects.map((project, index) => (
-                <motion.div
-                  key={project.id}
-                  animate={(activeIndex) => {
-                    // For active cards: show with full scale
-                    // For next cards: animate entry
-                    // For past cards: don't render
-                  }}
-                >
+              {projects.map((project, index) => {
+                // Determine if this card should be rendered
+                // We need to check active and next cards
+                let isActive = false;
+                let isNext = false;
+
+                // Use a motion value to get current active index
+                const [currentActive, setCurrentActive] = useState(0);
+
+                // Update based on scroll progress
+                useEffect(() => {
+                  const unsubscribe = scrollYProgress.onChange((latest) => {
+                    setCurrentActive(Math.floor(latest * projects.length));
+                  });
+                  return unsubscribe;
+                }, []);
+
+                isActive = currentActive === index;
+                isNext = currentActive === index - 1 && index > 0;
+
+                return (
                   <ProjectCard
+                    key={project.id}
                     project={project}
-                    isActive={
-                      activeCardIndex.get ? activeCardIndex.get() === index : index === 0
-                    }
-                    isNext={
-                      activeCardIndex.get
-                        ? activeCardIndex.get() === index - 1
-                        : index === 1
-                    }
+                    isActive={isActive}
+                    isNext={isNext}
                     index={index}
                     progress={scrollYProgress}
                   />
-                </motion.div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>
