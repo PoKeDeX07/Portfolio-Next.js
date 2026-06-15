@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, useScroll, useTransform } from 'framer-motion';
@@ -8,37 +8,22 @@ import { ArrowUpRight } from 'lucide-react';
 import { projects } from '@/data/portfolio';
 import { TiltCard } from '@/components/TiltCard';
 
-const ProjectCard = ({ project, isActive, isNext, index, progress }) => {
+const ProjectCard = ({ project, index, progress }) => {
   const isInternal = project.link?.startsWith('/');
+  const isLastCard = index === projects.length - 1;
 
-  // Each card occupies 1/projects.length of the scroll range
-  const cardStart = index / projects.length;
-  const cardEnd = (index + 1) / projects.length;
-
-  // Normalized progress for this card's scroll window
-  const cardProgress = useTransform(progress, [cardStart, cardEnd], [0, 1], {
+  // Map scroll progress for this card: each card gets 1/projects.length of scroll
+  const scaleProgress = useTransform(progress, [index / projects.length, (index + 1) / projects.length], [1, 0.9], {
     clamp: true,
   });
 
-  // For active cards: scale down as next card enters (1.0 → 0.92)
-  const activeScale = useTransform(cardProgress, [0, 1], [1, 0.92], {
+  const opacityProgress = useTransform(progress, [index / projects.length, (index + 1) / projects.length], [1, 0.6], {
     clamp: true,
   });
 
-  // For next cards: scale up and slide up from below
-  const nextYOffset = useTransform(cardProgress, [0, 1], [300, 0], {
-    clamp: true,
-  });
-
-  const nextScale = useTransform(cardProgress, [0, 1], [0.96, 1], {
-    clamp: true,
-  });
-
-  // Z-index management: active card high, next card higher during transition
-  const zIndex = isActive ? projects.length : isNext ? projects.length + 1 : 0;
-
-  // Only render if active or next card
-  if (!isActive && !isNext) return null;
+  // Only scale/fade cards that are NOT the last one
+  const scale = isLastCard ? 1 : scaleProgress;
+  const opacity = isLastCard ? 1 : opacityProgress;
 
   const Wrapper = ({ children }) =>
     project.link ? (
@@ -46,7 +31,7 @@ const ProjectCard = ({ project, isActive, isNext, index, progress }) => {
         <Link
           href={project.link}
           aria-label={`${project.title} — view case study`}
-          className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-from)]/30 rounded-[24px]"
+          className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-from)]/30 rounded-2xl"
         >
           {children}
         </Link>
@@ -56,7 +41,7 @@ const ProjectCard = ({ project, isActive, isNext, index, progress }) => {
           target="_blank"
           rel="noreferrer"
           aria-label={`${project.title} — view on Behance`}
-          className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-from)]/30 rounded-[24px]"
+          className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-from)]/30 rounded-2xl"
         >
           {children}
         </a>
@@ -67,28 +52,19 @@ const ProjectCard = ({ project, isActive, isNext, index, progress }) => {
 
   return (
     <motion.div
-      style={
-        isActive
-          ? {
-              scale: activeScale,
-              zIndex,
-            }
-          : isNext
-          ? {
-              y: nextYOffset,
-              scale: nextScale,
-              zIndex,
-            }
-          : {}
-      }
-      className="absolute top-0 left-0 right-0 w-full will-change-transform"
+      style={{
+        scale,
+        opacity,
+        zIndex: index + 1,
+      }}
+      className="sticky top-[10vh] h-[80vh] will-change-transform"
     >
       <Wrapper>
-        <TiltCard className="relative" intensity={6}>
-          <article className="group relative overflow-hidden rounded-[24px] border border-[var(--border)] bg-[var(--card-bg)] backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 hover:border-[var(--border-hover)] shadow-none dark:shadow-[0_1px_0_rgba(255,255,255,0.04)_inset,_0_30px_60px_-30px_rgba(0,0,0,0.25)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.12)] dark:hover:shadow-[0_1px_0_rgba(255,255,255,0.04)_inset,_0_30px_60px_-30px_rgba(0,0,0,0.25)]">
-            <div className="grid md:grid-cols-5 gap-0">
-              <div className="md:col-span-3 p-5 md:p-8">
-                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-[var(--bg)]">
+        <TiltCard className="relative h-full" intensity={6}>
+          <article className="group relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card-bg)] backdrop-blur-sm h-full transition-all duration-500 hover:border-[var(--border-hover)] shadow-[0_1px_0_rgba(255,255,255,0.04)_inset,_0_10px_25px_rgba(0,0,0,0.1)] dark:shadow-[0_1px_0_rgba(255,255,255,0.04)_inset,_0_30px_60px_-30px_rgba(0,0,0,0.25)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15)]">
+            <div className="grid md:grid-cols-5 gap-0 h-full">
+              <div className="md:col-span-3 p-5 md:p-8 flex flex-col justify-center">
+                <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-[var(--bg)]">
                   <Image
                     src={project.image}
                     alt={project.title}
@@ -144,28 +120,11 @@ const ProjectCard = ({ project, isActive, isNext, index, progress }) => {
 
 const SelectedWork = () => {
   const containerRef = useRef(null);
-  const [isDesktop, setIsDesktop] = useState(false);
-  const [activeCardIndex, setActiveCardIndex] = useState(0);
-
-  useEffect(() => {
-    const checkDesktop = () => setIsDesktop(window.innerWidth >= 768);
-    checkDesktop();
-    window.addEventListener('resize', checkDesktop);
-    return () => window.removeEventListener('resize', checkDesktop);
-  }, []);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ['start end', 'end start'],
+    offset: ['start start', 'end end'],
   });
-
-  // Track active card index on scroll
-  useEffect(() => {
-    const unsubscribe = scrollYProgress.onChange((latest) => {
-      setActiveCardIndex(Math.min(Math.floor(latest * projects.length), projects.length - 1));
-    });
-    return unsubscribe;
-  }, [scrollYProgress]);
 
   return (
     <section id="work" className="relative" ref={containerRef}>
@@ -196,56 +155,31 @@ const SelectedWork = () => {
         </motion.div>
       </div>
 
-      {/* Stacked cards - Desktop */}
-      {isDesktop ? (
-        <div
-          className="relative hidden md:block overflow-hidden"
-          style={{ height: `${projects.length * 100}vh` }}
-        >
-          <div className="sticky top-0 h-screen w-full flex items-center justify-center">
-            <div className="relative w-full max-w-6xl h-[60vh] px-6 lg:px-0">
-              {projects.map((project, index) => {
-                const isActive = activeCardIndex === index;
-                const isNext = activeCardIndex === index - 1 && index > 0;
+      {/* Stacking cards container */}
+      <div className="relative hidden md:block overflow-hidden" style={{ height: `${projects.length * 100}vh` }}>
+        {projects.map((project, index) => (
+          <ProjectCard key={project.id} project={project} index={index} progress={scrollYProgress} />
+        ))}
+      </div>
 
-                return (
-                  <ProjectCard
-                    key={project.id}
-                    project={project}
-                    isActive={isActive}
-                    isNext={isNext}
-                    index={index}
-                    progress={scrollYProgress}
-                  />
-                );
-              })}
-            </div>
-          </div>
+      {/* Mobile: traditional grid layout */}
+      <div className="section-container py-12 md:hidden">
+        <div className="grid grid-cols-1 gap-6">
+          {projects.map((p, i) => (
+            <motion.div
+              key={p.id}
+              initial={{ opacity: 0, y: 32 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.7, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <div className="relative h-[500px]">
+                <ProjectCard project={p} index={i} progress={scrollYProgress} />
+              </div>
+            </motion.div>
+          ))}
         </div>
-      ) : (
-        /* Mobile: traditional grid layout */
-        <div className="section-container py-12 md:hidden">
-          <div className="grid grid-cols-1 gap-6">
-            {projects.map((p, i) => (
-              <motion.div
-                key={p.id}
-                initial={{ opacity: 0, y: 32 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.7, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] }}
-              >
-                <ProjectCard
-                  project={p}
-                  isActive={true}
-                  isNext={false}
-                  index={i}
-                  progress={scrollYProgress}
-                />
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      )}
+      </div>
     </section>
   );
 };
