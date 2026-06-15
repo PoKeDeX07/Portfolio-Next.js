@@ -145,6 +145,7 @@ const ProjectCard = ({ project, isActive, isNext, index, progress }) => {
 const SelectedWork = () => {
   const containerRef = useRef(null);
   const [isDesktop, setIsDesktop] = useState(false);
+  const [activeCardIndex, setActiveCardIndex] = useState(0);
 
   useEffect(() => {
     const checkDesktop = () => setIsDesktop(window.innerWidth >= 768);
@@ -158,10 +159,13 @@ const SelectedWork = () => {
     offset: ['start end', 'end start'],
   });
 
-  // Determine active card based on scroll progress
-  const activeCardIndex = useTransform(scrollYProgress, (latest) => {
-    return Math.min(Math.floor(latest * projects.length), projects.length - 1);
-  });
+  // Track active card index on scroll
+  useEffect(() => {
+    const unsubscribe = scrollYProgress.onChange((latest) => {
+      setActiveCardIndex(Math.min(Math.floor(latest * projects.length), projects.length - 1));
+    });
+    return unsubscribe;
+  }, [scrollYProgress]);
 
   return (
     <section id="work" className="relative" ref={containerRef}>
@@ -201,24 +205,8 @@ const SelectedWork = () => {
           <div className="sticky top-0 h-screen w-full flex items-center justify-center">
             <div className="relative w-full max-w-6xl h-[60vh] px-6 lg:px-0">
               {projects.map((project, index) => {
-                // Determine if this card should be rendered
-                // We need to check active and next cards
-                let isActive = false;
-                let isNext = false;
-
-                // Use a motion value to get current active index
-                const [currentActive, setCurrentActive] = useState(0);
-
-                // Update based on scroll progress
-                useEffect(() => {
-                  const unsubscribe = scrollYProgress.onChange((latest) => {
-                    setCurrentActive(Math.floor(latest * projects.length));
-                  });
-                  return unsubscribe;
-                }, []);
-
-                isActive = currentActive === index;
-                isNext = currentActive === index - 1 && index > 0;
+                const isActive = activeCardIndex === index;
+                const isNext = activeCardIndex === index - 1 && index > 0;
 
                 return (
                   <ProjectCard
