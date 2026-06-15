@@ -8,35 +8,35 @@ import { ArrowUpRight } from 'lucide-react';
 import { projects } from '@/data/portfolio';
 import { TiltCard } from '@/components/TiltCard';
 
-const ProjectCard = ({ project, index, progress }) => {
+const ProjectCard = ({ project, isActive, isNext, index, progress }) => {
   const isInternal = project.link?.startsWith('/');
-  
-  // Staggered scroll ranges: each card animates over a wider window for smooth transitions
-  // This allows overlap where previous card scales down as new card appears
-  const cardStart = index * 0.25;
-  const cardEnd = Math.min((index + 1.5) * 0.25, 1);
-  
-  // Map scroll progress to card animation (0 = hidden below, 1 = fully stacked)
+
+  // Calculate scroll range: each card gets a dedicated scroll window
+  // isActive card: full visibility and scale
+  // isNext card: preview (10-15% visible at bottom)
+  const cardStart = index / projects.length;
+  const cardEnd = (index + 1) / projects.length;
+
+  // Progress within this card's scroll range
   const cardProgress = useTransform(progress, [cardStart, cardEnd], [0, 1], {
     clamp: true,
   });
 
-  // Y offset: cards smoothly slide up from below the viewport to their stacked position
-  const yOffset = useTransform(cardProgress, [0, 1], [400, index * -18], {
+  // Y position: next card starts below viewport and slides up
+  const yOffset = useTransform(cardProgress, [0, 1], [300, 0], {
     clamp: true,
   });
 
-  // Scale: cards grow from 0.88 to 1, and shrink back when the next card takes over
-  // This creates the "background card receding" effect
-  const scale = useTransform(cardProgress, [0, 0.6, 1], [0.88, 1, 0.92], {
+  // Scale: incoming card grows from 0.96 to 1
+  const scale = useTransform(cardProgress, [0, 1], [0.96, 1], {
     clamp: true,
   });
 
-  // Z-index: continuously increases to maintain proper stacking order
-  const zIndex = useTransform(cardProgress, [0, 1], [index, index + projects.length]);
+  // Z-index: ensures proper stacking
+  const zIndex = isActive ? projects.length + 1 : isNext ? projects.length : index;
 
-  // Shadow depth: increases as card comes to front, decreases as it goes to back
-  const shadowOpacity = useTransform(cardProgress, [0, 0.5, 1], [0, 1, 0.5]);
+  // Only render if active or next card
+  if (!isActive && !isNext) return null;
 
   const Wrapper = ({ children }) =>
     project.link ? (
@@ -65,19 +65,22 @@ const ProjectCard = ({ project, index, progress }) => {
 
   return (
     <motion.div
-      style={{
-        y: yOffset,
-        scale,
-        zIndex,
-        boxShadow: shadowOpacity.get ? shadowOpacity : undefined,
-      }}
-      className="absolute top-0 left-0 right-0 w-full opacity-100 will-change-transform"
+      style={
+        isNext
+          ? {
+              y: yOffset,
+              scale,
+              zIndex,
+            }
+          : {
+              zIndex,
+            }
+      }
+      className="absolute top-0 left-0 right-0 w-full will-change-transform"
     >
       <Wrapper>
         <TiltCard className="relative" intensity={6}>
-          <article
-            className="group relative overflow-hidden rounded-[24px] border border-[var(--border)] bg-[var(--card-bg)] backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 hover:border-[var(--border-hover)] shadow-none dark:shadow-[0_1px_0_rgba(255,255,255,0.04)_inset,_0_30px_60px_-30px_rgba(0,0,0,0.25)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.12)] dark:hover:shadow-[0_1px_0_rgba(255,255,255,0.04)_inset,_0_30px_60px_-30px_rgba(0,0,0,0.25)]"
-          >
+          <article className="group relative overflow-hidden rounded-[24px] border border-[var(--border)] bg-[var(--card-bg)] backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 hover:border-[var(--border-hover)] shadow-none dark:shadow-[0_1px_0_rgba(255,255,255,0.04)_inset,_0_30px_60px_-30px_rgba(0,0,0,0.25)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.12)] dark:hover:shadow-[0_1px_0_rgba(255,255,255,0.04)_inset,_0_30px_60px_-30px_rgba(0,0,0,0.25)]">
             <div className="grid md:grid-cols-5 gap-0">
               <div className="md:col-span-3 p-5 md:p-8">
                 <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-[var(--bg)]">
@@ -139,7 +142,6 @@ const SelectedWork = () => {
   const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
-    // Check if desktop (md breakpoint and above)
     const checkDesktop = () => setIsDesktop(window.innerWidth >= 768);
     checkDesktop();
     window.addEventListener('resize', checkDesktop);
@@ -148,13 +150,18 @@ const SelectedWork = () => {
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ['start start', 'end end'],
+    offset: ['start end', 'end start'],
+  });
+
+  // Determine active card based on scroll progress
+  const activeCardIndex = useTransform(scrollYProgress, (latest) => {
+    return Math.min(Math.floor(latest * projects.length), projects.length - 1);
   });
 
   return (
     <section id="work" className="relative" ref={containerRef}>
       {/* Header */}
-      <div className="section-container py-24 md:py-32 mb-20 md:mb-32">
+      <div className="section-container py-24 md:py-32">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -180,18 +187,37 @@ const SelectedWork = () => {
         </motion.div>
       </div>
 
-      {/* Stacked cards container */}
+      {/* Stacked cards - Desktop */}
       {isDesktop ? (
-        <div className="relative hidden md:block" style={{ height: `${(projects.length + 1.2) * 120}vh` }}>
-          <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
+        <div
+          className="relative hidden md:block overflow-hidden"
+          style={{ height: `${projects.length * 100}vh` }}
+        >
+          <div className="sticky top-0 h-screen w-full flex items-center justify-center">
             <div className="relative w-full max-w-6xl h-[60vh] px-6 lg:px-0">
               {projects.map((project, index) => (
-                <ProjectCard
+                <motion.div
                   key={project.id}
-                  project={project}
-                  index={index}
-                  progress={scrollYProgress}
-                />
+                  animate={(activeIndex) => {
+                    // For active cards: show with full scale
+                    // For next cards: animate entry
+                    // For past cards: don't render
+                  }}
+                >
+                  <ProjectCard
+                    project={project}
+                    isActive={
+                      activeCardIndex.get ? activeCardIndex.get() === index : index === 0
+                    }
+                    isNext={
+                      activeCardIndex.get
+                        ? activeCardIndex.get() === index - 1
+                        : index === 1
+                    }
+                    index={index}
+                    progress={scrollYProgress}
+                  />
+                </motion.div>
               ))}
             </div>
           </div>
@@ -208,7 +234,13 @@ const SelectedWork = () => {
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 0.7, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] }}
               >
-                <ProjectCard project={p} index={i} progress={scrollYProgress} />
+                <ProjectCard
+                  project={p}
+                  isActive={true}
+                  isNext={false}
+                  index={i}
+                  progress={scrollYProgress}
+                />
               </motion.div>
             ))}
           </div>
