@@ -54,7 +54,7 @@ export const projects = [
     tags: ["SaaS Dashboard", "Case Study", "UI/UX Design"],
     description:
       "ChatBot.AI is a no-code SaaS platform that lets businesses build, train, and deploy custom AI chatbots without any technical knowledge. This case study covers the end-to-end UX/UI process — from competitive research and information architecture to a complete design system in both light and dark mode.",
-    image: "/ChatBotAI.jpg",
+    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Cover%20site-1mgwdN1ViFegauZGuvUQGbxAhiQHHY.jpg",
     year: "2026",
     role: "UI/UX Designer",
     accent: "#7C5CFF",
