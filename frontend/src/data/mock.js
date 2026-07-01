@@ -49,6 +49,18 @@ export const tools = [
 // NOTE: Nova Trade intentionally removed from cards — lives only in the Case Study section.
 export const projects = [
   {
+    id: "chatbot-ai",
+    title: "ChatBot.AI — AI Agent Builder | UX/UI Case Study",
+    tags: ["SaaS Dashboard", "Case Study", "UI/UX Design"],
+    description:
+      "ChatBot.AI is a no-code SaaS platform that lets businesses build, train, and deploy custom AI chatbots without any technical knowledge. This case study covers the end-to-end UX/UI process — from competitive research and information architecture to a complete design system in both light and dark mode.",
+    image: "/ChatBotAI.jpg",
+    year: "2026",
+    role: "UI/UX Designer",
+    accent: "#7C5CFF",
+    link: "https://www.behance.net/gallery/251946161/ChatBotAI-AI-Agent-Builder-UXUI-Case-Study",
+  },
+  {
     id: "fintrust",
     title: "FinTrust — Finance AI Chat Bot",
     tags: ["Mobile", "Fintech", "Conversational UI"],
