@@ -86,7 +86,7 @@ export default function ProjectCaseStudy() {
       </section>
 
       {/* Case Study Sections */}
-      {caseStudy.sections.map((section, idx) => (
+      {caseStudy?.sections && Array.isArray(caseStudy.sections) && caseStudy.sections.map((section, idx) => (
         <section key={idx} className="py-20 px-4 border-t border-gray-800">
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
@@ -96,41 +96,41 @@ export default function ProjectCaseStudy() {
               </div>
               <div className="md:col-span-2">
                 <p className="text-lg text-gray-400 leading-relaxed mb-8">{section.body}</p>
-                <div className="grid grid-cols-2 gap-8">
-                  {section.stats.map((stat, sidx) => (
-                    <div key={sidx}>
-                      <p className="text-3xl font-bold mb-2">{stat.value}</p>
-                      <p className="text-sm text-gray-500">{stat.label}</p>
-                    </div>
-                  ))}
-                </div>
+                {section.stats && Array.isArray(section.stats) && (
+                  <div className="grid grid-cols-2 gap-8">
+                    {section.stats.map((stat, sidx) => (
+                      <div key={sidx}>
+                        <p className="text-3xl font-bold mb-2">{stat.value}</p>
+                        <p className="text-sm text-gray-500">{stat.label}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </div>
         </section>
       ))}
 
-      {/* Gallery Section */}
-      <section className="py-20 px-4 border-t border-gray-800">
-        <div className="max-w-6xl mx-auto">
-          <div className="mb-16">
-            <p className="text-xs text-gray-500 uppercase mb-4">Final Design</p>
-            <h2 className="text-3xl md:text-4xl font-bold">Interface Showcase</h2>
+      {/* Screenshots Section */}
+      {caseStudy?.screensImage && (
+        <section className="py-20 px-4 border-t border-gray-800">
+          <div className="max-w-6xl mx-auto">
+            <div className="mb-16">
+              <p className="text-xs text-gray-500 uppercase mb-4">Final Design</p>
+              <h2 className="text-3xl md:text-4xl font-bold">Interface Showcase</h2>
+            </div>
+            <div className="relative w-full h-auto md:h-screen rounded-lg overflow-hidden">
+              <Image
+                src={caseStudy.screensImage}
+                alt="Design showcase"
+                fill
+                className="object-contain"
+              />
+            </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {caseStudy.gallery.map((image, idx) => (
-              <div key={idx} className="relative w-full h-96 rounded-lg overflow-hidden">
-                <Image
-                  src={image}
-                  alt={`Design showcase ${idx + 1}`}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       <Footer />
     </main>
