@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Download, ExternalLink } from 'lucide-react';
-import { toast } from 'sonner';
+const notify = (message) => window.alert(message);
 import { profile } from '@/data/portfolio';
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -30,18 +30,18 @@ const Contact = () => {
     }
 
     if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
-      toast.error('Please fill in all the fields.');
+      notify('Please fill in all the fields.');
       return;
     }
 
     if (!emailRegex.test(form.email.trim())) {
-      toast.error('Please enter a valid email address.');
+      notify('Please enter a valid email address.');
       return;
     }
 
     const url = process.env.NEXT_PUBLIC_GOOGLE_SCRIPT_URL;
     if (!url) {
-      toast.error('Form endpoint is not configured. Please try again later.');
+      notify('Form endpoint is not configured. Please try again later.');
       return;
     }
 
@@ -58,17 +58,17 @@ const Contact = () => {
       });
 
       setForm({ name: '', email: '', message: '', _honeypot: '' });
-      toast.success('Message sent — I’ll get back within 24 hours.');
+      notify('Message sent — I’ll get back within 24 hours.');
     } catch (err) {
       console.error(err);
-      toast.error('Something went wrong. Please try again or email me directly.');
+      notify('Something went wrong. Please try again or email me directly.');
     } finally {
       setSubmitting(false);
     }
   };
 
   const onResumeDownload = () => {
-    toast.success('Downloading resume.pdf');
+    notify('Downloading resume.pdf');
   };
 
   return (
