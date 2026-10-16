@@ -166,16 +166,35 @@ export const caseStudy = {
 export const experience = [
   {
     id: 'exp-1',
-    role: 'Product Designer',
-    company: 'ScaleUp Software',
-    companyUrl: 'https://scaleupsoftware.io',
+    role: 'Sr. UI Designer',
+    company: 'Addnectar Solutions',
+    companyUrl: '',
     location: 'Mumbai · Full-time',
-    period: 'Oct 2025 — Present',
-    summary:
-      'Designing product experiences end-to-end — from discovery and wireframes to high-fidelity UI. Partnering with product and engineering to ship considered, measurable work.',
+    period: 'July 2026 — Present',
+    responsibilities: [
+      'Design SaaS dashboards for the promotional products industry.',
+      'Create visual tools for 2D/3D mockups, catalogs, lookbooks, and presentations.',
+      'Design intuitive UI/UX to simplify workflows and improve usability.',
+      'Build scalable, user-friendly product experiences.',
+    ],
   },
   {
     id: 'exp-2',
+    role: 'UI Designer',
+    company: 'ScaleUp Software',
+    companyUrl: 'https://scaleupsoftware.io',
+    location: 'Mumbai · Full-time',
+    period: 'Oct 2025 — July 2026',
+    responsibilities: [
+      'Designed responsive web and mobile interfaces for SaaS products.',
+      'Created high-fidelity UI, interactive prototypes, and reusable Figma components.',
+      'Built scalable design systems and maintained UI consistency.',
+      'Worked closely with developers to ensure pixel-perfect implementation.',
+      'Owned UI design from requirements through developer handoff.',
+    ],
+  },
+  {
+    id: 'exp-3',
     role: 'UI/UX Designer',
     company: 'Cargoflash Infotech',
     companyUrl: 'https://cargoflash.com',
@@ -186,7 +205,7 @@ export const experience = [
     links: [{ text: 'Octoloop.com', href: 'https://octoloop.com' }],
   },
   {
-    id: 'exp-3',
+    id: 'exp-4',
     role: 'UI/UX Consultant',
     company: 'Cargoflash Infotech',
     companyUrl: 'https://cargoflash.com',
@@ -196,7 +215,7 @@ export const experience = [
       'Shaped early-stage product design by creating wireframes, user flows, and UI concepts. Worked with stakeholders to translate requirements into intuitive experiences for aviation platforms.',
   },
   {
-    id: 'exp-4',
+    id: 'exp-5',
     role: '3D Design Intern',
     company: 'Iqonic Designs',
     companyUrl: 'https://iqonic.design/',
