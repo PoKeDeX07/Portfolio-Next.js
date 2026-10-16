@@ -102,9 +102,17 @@ const Experience = () => {
                       {item.period}
                     </div>
                   </div>
-                  <p className="mt-4 text-[15px] leading-[1.7] text-[#9CA3AF] max-w-xl">
-                    {renderSummary(item.summary, item.links)}
-                  </p>
+                  {item.responsibilities ? (
+                    <ul className="mt-4 space-y-1 text-[15px] leading-[1.5] text-[#9CA3AF] max-w-xl list-disc pl-5 marker:text-[#6B7280]">
+                      {item.responsibilities.map((responsibility) => (
+                        <li key={responsibility}>{responsibility}</li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="mt-4 text-[15px] leading-[1.7] text-[#9CA3AF] max-w-xl">
+                      {renderSummary(item.summary, item.links)}
+                    </p>
+                  )}
                 </motion.li>
               ))}
             </ol>
