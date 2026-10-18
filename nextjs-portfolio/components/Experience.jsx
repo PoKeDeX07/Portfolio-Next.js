@@ -48,7 +48,7 @@ const Experience = () => {
                 Experience
               </div>
               <h2 className="mt-5 text-[28px] md:text-[36px] leading-[1.15] font-semibold tracking-[-0.025em] text-[#EDEDED]">
-                3.5 years, one steady throughline.
+                4+ years, one steady throughline.
               </h2>
               <p className="mt-5 text-[15px] leading-[1.7] text-[#9CA3AF] max-w-sm">
                 Different companies, different industries — one thread of craft running through all of them.
@@ -95,7 +95,10 @@ const Experience = () => {
                         ) : (
                           <span className="text-[#EDEDED]">{item.company}</span>
                         )}
-                        <span className="text-[#9CA3AF]"> · {item.location}</span>
+                        <span className="text-[#9CA3AF]">
+                          {' · '}{item.location}
+                          {item.employmentType ? ` · ${item.employmentType}` : ''}
+                        </span>
                       </div>
                     </div>
                     <div className="text-[12px] tracking-[0.15em] uppercase text-[#9CA3AF]">
