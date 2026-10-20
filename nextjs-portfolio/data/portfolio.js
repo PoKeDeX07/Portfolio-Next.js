@@ -7,11 +7,11 @@ export const profile = {
   location: 'Mumbai, India',
   title: 'UI/UX Designer',
   subtitle: 'Product Designer',
-  experience: '3.5+ Years',
+  experience: '4+ Years',
   email: 'Kulkarnianiket0715@gmail.com',
   phone: '+91 90046 48041',
   bio:
-    "UI/UX designer with 3.5 years of experience designing user-friendly digital products across fintech, e-commerce, and lifestyle domains. Based in Mumbai, I translate complex ideas into clean, functional interfaces — focused on user empathy, responsive design, and collaborative problem-solving. Outside of work, you'll find me playing football or diving into video games.",
+    "UI/UX designer with 4+ years of experience designing user-friendly digital products across fintech, e-commerce, and lifestyle domains. Based in Mumbai, I translate complex ideas into clean, functional interfaces — focused on user empathy, responsive design, and collaborative problem-solving. Outside of work, you'll find me playing football or diving into video games.",
   resumeUrl: '/resume.pdf',
   socials: [
     { label: 'Behance', href: 'https://www.behance.net/aniketkulkarni10' },
@@ -69,7 +69,7 @@ export const projects = [
     tags: ['Mobile', 'Fintech', 'Crypto'],
     description:
       'A beginner-friendly crypto trading platform — designed to make digital asset investing simple, safe, and educational.',
-    image: 'https://customer-assets.emergentagent.com/job_aniket-design/artifacts/07ocntqc_Nova%20Trade.jpg',
+    image: '/nova-trade-thumbnail.jpg',
     year: '2024',
     role: 'UI/UX Designer',
     accent: '#00D4FF',

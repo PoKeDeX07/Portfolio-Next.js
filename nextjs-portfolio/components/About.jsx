@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { profile } from '@/data/portfolio';
 
 const fact = [
-  { label: 'Experience', value: '3.5+ Years' },
+  { label: 'Experience', value: '4+ Years' },
   { label: 'Based in', value: 'Mumbai' },
   { label: 'Focus', value: 'Mobile · SaaS · Fintech' },
   { label: 'Available', value: 'Q3 2025' },
