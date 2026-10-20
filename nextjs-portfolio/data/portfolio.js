@@ -7,11 +7,11 @@ export const profile = {
   location: 'Mumbai, India',
   title: 'UI/UX Designer',
   subtitle: 'Product Designer',
-  experience: '3.5+ Years',
+  experience: '4+ Years',
   email: 'Kulkarnianiket0715@gmail.com',
   phone: '+91 90046 48041',
   bio:
-    "UI/UX designer with 3.5 years of experience designing user-friendly digital products across fintech, e-commerce, and lifestyle domains. Based in Mumbai, I translate complex ideas into clean, functional interfaces — focused on user empathy, responsive design, and collaborative problem-solving. Outside of work, you'll find me playing football or diving into video games.",
+    "UI/UX designer with 4+ years of experience designing user-friendly digital products across fintech, e-commerce, and lifestyle domains. Based in Mumbai, I translate complex ideas into clean, functional interfaces — focused on user empathy, responsive design, and collaborative problem-solving. Outside of work, you'll find me playing football or diving into video games.",
   resumeUrl: '/resume.pdf',
   socials: [
     { label: 'Behance', href: 'https://www.behance.net/aniketkulkarni10' },
@@ -69,7 +69,7 @@ export const projects = [
     tags: ['Mobile', 'Fintech', 'Crypto'],
     description:
       'A beginner-friendly crypto trading platform — designed to make digital asset investing simple, safe, and educational.',
-    image: 'https://customer-assets.emergentagent.com/job_aniket-design/artifacts/07ocntqc_Nova%20Trade.jpg',
+    image: '/nova-trade-thumbnail.jpg',
     year: '2024',
     role: 'UI/UX Designer',
     accent: '#00D4FF',
@@ -180,17 +180,18 @@ export const experience = [
   },
   {
     id: 'exp-2',
-    role: 'UI Designer',
+    role: 'Product Designer',
     company: 'ScaleUp Software',
     companyUrl: 'https://scaleupsoftware.io',
-    location: 'Mumbai · Full-time',
-    period: 'Oct 2025 — July 2026',
+    location: 'Remote',
+    employmentType: 'Full-time',
+    period: 'October 2025 — July 2026',
     responsibilities: [
       'Designed responsive web and mobile interfaces for SaaS products.',
-      'Created high-fidelity UI, interactive prototypes, and reusable Figma components.',
+      'Created high-fidelity UI designs, interactive prototypes, and reusable Figma components.',
       'Built scalable design systems and maintained UI consistency.',
-      'Worked closely with developers to ensure pixel-perfect implementation.',
-      'Owned UI design from requirements through developer handoff.',
+      'Collaborated with developers to ensure pixel-perfect implementation.',
+      'Owned the design process from requirements gathering through developer handoff.',
     ],
   },
   {
@@ -198,10 +199,15 @@ export const experience = [
     role: 'UI/UX Designer',
     company: 'Cargoflash Infotech',
     companyUrl: 'https://cargoflash.com',
-    location: 'Mumbai · Full-time',
-    period: 'Aug 2023 — Oct 2025',
-    summary:
-      'Designed user-friendly interfaces for aviation SaaS products, handling wireframes through high-fidelity UI. Contributed to the live project Octoloop.com and helped build a consistent Figma design system.',
+    location: 'Hybrid',
+    employmentType: 'Full-time',
+    period: 'August 2023 — October 2025',
+    responsibilities: [
+      'Designed user-friendly interfaces for aviation SaaS products, from wireframes to high-fidelity UI.',
+      'Contributed to the live project Octoloop.com.',
+      'Built and maintained a consistent Figma design system.',
+      'Collaborated with stakeholders and developers to improve usability and deliver production-ready interfaces.',
+    ],
     links: [{ text: 'Octoloop.com', href: 'https://octoloop.com' }],
   },
   {
@@ -209,20 +215,27 @@ export const experience = [
     role: 'UI/UX Consultant',
     company: 'Cargoflash Infotech',
     companyUrl: 'https://cargoflash.com',
-    location: 'Mumbai · Contract',
-    period: 'Aug 2022 — Aug 2023',
-    summary:
-      'Shaped early-stage product design by creating wireframes, user flows, and UI concepts. Worked with stakeholders to translate requirements into intuitive experiences for aviation platforms.',
+    location: 'Remote',
+    employmentType: 'Contract',
+    period: 'August 2022 — August 2023',
+    responsibilities: [
+      'Shaped early-stage product experiences through wireframes, user flows, and UI concepts.',
+      'Worked with stakeholders to translate requirements into intuitive experiences for aviation platforms.',
+      'Supported the product design process from initial concepts through design handoff.',
+    ],
   },
   {
     id: 'exp-5',
     role: '3D Design Intern',
-    company: 'Iqonic Designs',
+    company: 'Iconic Design',
     companyUrl: 'https://iqonic.design/',
-    location: 'Remote · Internship',
-    period: 'Sep 2021 — Dec 2021',
-    summary:
-      "Used Blender and Illustrator to create 3D assets and UI elements for digital product packs — shipped as commercial design offerings on the company's website.",
+    location: 'Mumbai',
+    employmentType: 'Internship',
+    period: 'September 2021 — December 2021',
+    responsibilities: [
+      'Created 3D assets using Blender and visual design elements using Illustrator.',
+      "Designed assets for digital product packs and commercial design offerings featured on the company's website.",
+    ],
   },
 ];
 
